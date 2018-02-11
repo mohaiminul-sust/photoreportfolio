@@ -3,12 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use JavaScript;
-use Auth;
-use App\Album as Album;
-use App\Photo as Photo;
+use App\Album;
 
-class HomeController extends Controller
+class AlbumController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -27,9 +24,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home')
-        ->with('adminUser', Auth::user())
-        ->with('albums', Album::all())
-        ->with('photos', Photo::all());
+        $albums = Album::all();
+        
+        foreach ($albums as $album) {
+            $album->albumphotos = $album->photos->toArray();
+        }
+
+        return view('album.index')->with('albums', $albums);
     }
 }
