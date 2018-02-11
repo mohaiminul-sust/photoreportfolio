@@ -1,14 +1,17 @@
 {
     "name": "laravel/laravel",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "description": "Photo manager project",
+    "keywords": ["framework", "laravel", "photo", "manager"],
     "license": "MIT",
     "type": "project",
     "require": {
         "php": ">=7.0.0",
         "fideloper/proxy": "~3.3",
+        "garygreen/pretty-routes": "^1.0",
+        "laracasts/utilities": "^3.0",
         "laravel/framework": "5.5.*",
-        "laravel/tinker": "~1.0"
+        "laravel/tinker": "~1.0",
+        "laravelcollective/html": "^5.2.0"
     },
     "require-dev": {
         "filp/whoops": "~2.0",
