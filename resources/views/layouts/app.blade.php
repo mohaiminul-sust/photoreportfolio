@@ -37,7 +37,33 @@
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        &nbsp;
+                        {{--  &nbsp;  --}}
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
+                                Albums <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="{{ route('album.index') }}"> All Albums </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('album.index') }}"> Create Album </a>    
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
+                                Photos <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="{{ route('album.index') }}"> All Photos </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('album.index') }}"> Upload Photo(s) </a>    
+                                </li>
+                            </ul>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -51,7 +77,6 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
-
                                 <ul class="dropdown-menu">
                                     <li>
                                         <a href="{{ route('logout') }}"

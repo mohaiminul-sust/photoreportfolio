@@ -3,36 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Album;
 
-class AlbumController extends Controller
+class PortfolioController extends Controller
 {
     /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
-    /**
-     * Show the application dashboard.
+     * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $albums = Album::all();
-        
-        foreach ($albums as $album) {
-            $album->albumphotos = $album->photos->toArray();
-        }
-
-        return view('album.index')->with('albums', $albums);
+        //
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -41,7 +23,7 @@ class AlbumController extends Controller
      */
     public function create()
     {
-        return view('album.create');
+        //
     }
 
     /**

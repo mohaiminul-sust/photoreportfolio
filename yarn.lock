@@ -1050,10 +1050,6 @@ bootstrap-timepicker@^0.5.2:
   version "0.5.2"
   resolved "https://registry.yarnpkg.com/bootstrap-timepicker/-/bootstrap-timepicker-0.5.2.tgz#10ed9f2a2f0b8ccaefcde0fcf6a0738b919a3835"
 
-bootstrap@4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-4.0.0.tgz#ceb03842c145fcc1b9b4e15da2a05656ba68469a"
-
 bootstrap@^3.3.7:
   version "3.3.7"
   resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-3.3.7.tgz#5a389394549f23330875a3b150656574f8a9eb71"
@@ -2358,6 +2354,10 @@ ee-first@1.1.1:
 electron-to-chromium@^1.2.7, electron-to-chromium@^1.3.30:
   version "1.3.32"
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.32.tgz#11d0684c0840e003c4be8928f8ac5f35dbc2b4e6"
+
+element-resize-event@^2.0.7:
+  version "2.0.9"
+  resolved "https://registry.yarnpkg.com/element-resize-event/-/element-resize-event-2.0.9.tgz#2f5e1581a296eb5275210c141bc56342e218f876"
 
 element-ui@^2.1.0:
   version "2.1.0"
@@ -4110,6 +4110,10 @@ isexe@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/isexe/-/isexe-2.0.0.tgz#e8fbf374dc556ff8947a10dcb0572d633f2cfa10"
 
+ismobilejs@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/ismobilejs/-/ismobilejs-0.4.1.tgz#1a5f126c70fed39c93da380fa62cbae5723e7dc2"
+
 isobject@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/isobject/-/isobject-2.1.0.tgz#f065561096a3f1da2ef46272f815c840d87e0c89"
@@ -5849,6 +5853,10 @@ proxy-addr@~2.0.2:
   dependencies:
     forwarded "~0.1.2"
     ipaddr.js "1.5.2"
+
+proxy-polyfill@^0.1.6:
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/proxy-polyfill/-/proxy-polyfill-0.1.7.tgz#1c06fe10b0b606e79268e14d4528952e64036d39"
 
 prr@~1.0.1:
   version "1.0.1"
@@ -7630,6 +7638,15 @@ vm-browserify@0.0.4, vm-browserify@~0.0.1:
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-0.0.4.tgz#5d7ea45bbef9e4a6ff65f95438e0a87c357d5a73"
   dependencies:
     indexof "0.0.1"
+
+vudal@^1.11.5:
+  version "1.11.5"
+  resolved "https://registry.yarnpkg.com/vudal/-/vudal-1.11.5.tgz#4d05eaf568287e157979bc8e0a8781613a8b3f4b"
+  dependencies:
+    element-resize-event "^2.0.7"
+    ismobilejs "^0.4.1"
+    object-assign "^4.1.1"
+    proxy-polyfill "^0.1.6"
 
 vue-hot-reload-api@^2.2.0:
   version "2.2.4"

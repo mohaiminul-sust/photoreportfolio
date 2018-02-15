@@ -18,4 +18,9 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/albums', 'AlbumController@index')->name('album.index');
+
+Route::group(['prefix' => 'albums'], function() {
+    Route::get('/', 'AlbumController@index')->name('album.index');
+    Route::post('/create', 'AlbumController@create')->name('album.create');
+    // Route::get('/{id}', 'AlbumController@');    
+});

@@ -13,11 +13,7 @@
                 <el-header>
                     <h3 class="box-title center">Albums</h3>
                     <el-button class="pull-right" type="success" icon="el-icon-plus"></el-button>
-                    <div class="box-tools">
-                        <div class="input-group input-group-sm" style="height: 300px;">
-                            
-                        </div>
-                    </div>
+                    
                 </el-header>
                 </div>
                 <!-- /.box-header -->
@@ -32,7 +28,8 @@
                                 <i class="el-icon-time"></i>
                                 <span style="margin-left: 10px">@{{ album.created_at }}</span>
                             </time>
-                            <el-button class="button pull-right" type="primary" icon="el-icon-edit"></el-button>
+                            <el-button v-on:click="viewAlbumPhotos(album, $event)" class="button" type="success" icon="el-icon-picture"></el-button>
+                            <el-button v-on:click="showAlbumDetails(album, $event)" class="button pull-right" type="primary" icon="el-icon-edit"></el-button>
                             </div>
                         </div>
                         </el-card>
@@ -53,9 +50,12 @@
             albums: {!! json_encode($albums->toArray()) !!}
         },
         methods: {
-            showAlbumDetails: function (event) {
-              // `this` inside methods points to the Vue instance
-                
+            showAlbumDetails: function (album, event) {
+                console.log(event.target);
+                console.log(album);
+            },
+            viewAlbumPhotos: function (album, event) {
+                console.log(album.photos);
             }
         }
     })
