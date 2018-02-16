@@ -8,10 +8,12 @@
 require('./bootstrap');
 import ElementUI from 'element-ui';
 import VueImg from 'v-img';
+import VuejsDialog from 'vuejs-dialog';
 
 window.Vue = require('vue');
 
 Vue.use(ElementUI);
+Vue.use(VuejsDialog);
 
 const vueImgConfig = {
     // Use `alt` attribute as gallery slide title

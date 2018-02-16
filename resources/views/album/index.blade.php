@@ -16,7 +16,7 @@
                         <a href="{{ route('album.index') }}">
                             <h3 class="box-title center">Albums</h3>
                         </a>
-                        <span class="box-title" style="margin-left: 20px">(@{{ albums.to }} / @{{ albums.total }})</span>        
+                        <span class="description" style="margin-left: 20px">@{{ albums.meta.from }} - @{{ albums.meta.to }} of @{{ albums.meta.total }} albums</span>        
                     </div>
                     
                     <div class="pull-right">
@@ -40,41 +40,45 @@
                             <div class="bottom clearfix">
                             <time class="time">
                                 <i class="el-icon-picture"></i>
-                                <span style="margin-left: 10px">@{{ album.albumphotos.length }} photos in album</span>
+                                <span style="margin-left: 10px">@{{ album.photos.length }} photos in album</span>
                             </time>
                             <el-button v-on:click="deleteAlbum(album)" class="button" type="danger" icon="el-icon-delete"></el-button>
-                            <el-button class="button pull-right" type="primary" icon="el-icon-edit"></el-button>
+                            <el-button v-on:click="showEditModal" class="button pull-right" type="primary" icon="el-icon-edit"></el-button>
                             </div>
                         </div>
                         </el-card>
                     </el-col>
                 </el-row>
-                <div class="block text-center">
-                    {{--  {{ $albums->links() }}  --}}
-                    <el-pagination
-                    layout="prev, pager, next"
-                    :total="albums.total"
-                    :per_page="albums.per_page"
-                    :current-page="albums.current_page"
-                    @current-change="handleCurrentPageChange">
-                  </el-pagination>
-                </div>
+                <el-row class="box">
+                    <div class="block text-center">
+                        <el-pagination
+                        layout="prev, pager, next"
+                        :total="albums.meta.total"
+                        :per_page="albums.meta.per_page"
+                        :current-page="albums.meta.current_page"
+                        @current-change="handleCurrentPageChange">
+                        </el-pagination>
+                    </div>
+                </el-row>
                 <!-- /.box-body -->
             </div>
         <!-- /.box -->
         </div>
+
+        <modal v-if="presentingEditModal" @close="hideEditModal">
+            <h3 slot="header">custom header</h3>
+        </modal>
     </div>
 </el-main>
 @endsection
 
 @section('script')
-    $('#flash-overlay-modal').modal();
-    $('div.alert').not('.alert-important').delay(3000).fadeOut(350);
-
     var album = new Vue({
         el: '#album',
         data: {
-            albums: []
+            albums: [],
+            formerrors: {},
+            presentingEditModal: false
         }, 
         created(){
             this.fetchAlbums();
@@ -84,22 +88,22 @@
                 var link = "{!! url('albums/all') !!}";
                 axios.get(link)
                 .then(function (response) {
-                    this.albums = response.data
+                    console.log(response);
+                    this.albums = response.data;
                 }.bind(this))
                 .catch(function (error) {
-                    console.log(error);
+                    this.formerrors = error;
                 });
             },
             deleteAlbum: function (album) {
                 var link = "{!! url('albums/delete') !!}/" + album.id;
-                console.log("Firing" + link);
-
+                console.log("firing " + link);
                 axios.get(link)
                 .then(function (response) {
                     this.albums = response.data
                 }.bind(this))
                 .catch(function (error) {
-                    console.log(error);
+                    this.formerrors = error;
                 });
             },
             handleCurrentPageChange: function(val) {
@@ -109,8 +113,14 @@
                     this.albums = response.data
                 }.bind(this))
                 .catch(function (error) {
-                    console.log(error);
+                    this.formerrors = error;
                 });
+            },
+            showEditModal: function(album) {
+                this.presentingEditModal = true;
+            },
+            hideEditModal: function() {
+                this.presentingEditModal = false;
             }
         }
     })

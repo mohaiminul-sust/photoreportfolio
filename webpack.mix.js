@@ -16,3 +16,4 @@ mix.js('resources/assets/js/app.js', 'public/js')
 
 mix.styles(['resources/assets/css/albumcard.css'], 'public/css/albumcard.css');
 mix.styles(['resources/assets/css/createalbumform.css'], 'public/css/createalbumform.css');
+mix.styles(['resources/assets/css/vuemodal.css'], 'public/css/vuemodal.css');

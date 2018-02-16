@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Album;
+use App\Http\Resources\AlbumResource;
 
 class AlbumController extends Controller
 {
@@ -34,11 +35,9 @@ class AlbumController extends Controller
      */
     public function getAlbums()
     {   
-        $albums = Album::paginate(10);
-        foreach ($albums as $album) {
-            $album->albumphotos = $album->photos->toArray();
-        }
-        return $albums;
+        $albums = Album::paginate(20);
+        // return $albums;
+        return AlbumResource::collection($albums);
     }
 
     /**
@@ -96,7 +95,7 @@ class AlbumController extends Controller
      */
     public function show($id)
     {
-        //
+        return new AlbumResource(Album::find($id));;
     }
 
     /**
@@ -133,14 +132,7 @@ class AlbumController extends Controller
         $album = Album::find($id);
         $album->delete();
 
-        // flash('Album deleted!')->error();
-        // return \Redirect::route('album.index');
-        $albums = Album::paginate(10);
-        
-        foreach ($albums as $album) {
-            $album->albumphotos = $album->photos->toArray();
-        }
-
-        return $albums;
+        $albums = Album::paginate(20);
+        return AlbumResource::collection($albums);
     }
 }
