@@ -24,15 +24,22 @@ class AlbumController extends Controller
      */
     public function index()
     {
-        $albums = Album::all();
-        
+        return view('album.index');
+    }
+
+    /**
+     * Display the specified collection.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getAlbums()
+    {   
+        $albums = Album::paginate(10);
         foreach ($albums as $album) {
             $album->albumphotos = $album->photos->toArray();
         }
-
-        return view('album.index')->with('albums', $albums);
+        return $albums;
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -52,7 +59,33 @@ class AlbumController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = [
+            'name' => 'required',
+            'description' => 'required',
+            'cover_image'=>'required|image'
+        ];
+
+        $validator = \Validator::make($request->toArray(), $rules);
+        if($validator->fails()){
+            return \Redirect::route('album.create')
+            ->withErrors($validator)
+            ->withInput();
+        }
+
+        $album = new Album();
+        $album->name = $request->name;
+        $album->description = $request->description;
+        
+        if($request->hasFile('cover_image'))
+        {
+            $file = $request->file('cover_image')->store('albums/cover');
+            $album->cover_image = $file;
+        }
+
+        $album->save();
+        flash('Album created!')->success();
+
+        return \Redirect::route('album.index');
     }
 
     /**
@@ -97,6 +130,17 @@ class AlbumController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $album = Album::find($id);
+        $album->delete();
+
+        // flash('Album deleted!')->error();
+        // return \Redirect::route('album.index');
+        $albums = Album::paginate(10);
+        
+        foreach ($albums as $album) {
+            $album->albumphotos = $album->photos->toArray();
+        }
+
+        return $albums;
     }
 }

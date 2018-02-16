@@ -21,6 +21,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['prefix' => 'albums'], function() {
     Route::get('/', 'AlbumController@index')->name('album.index');
-    Route::post('/create', 'AlbumController@create')->name('album.create');
-    // Route::get('/{id}', 'AlbumController@');    
+    Route::get('/all', 'AlbumController@getAlbums')->name('album.all');
+    Route::get('/create', 'AlbumController@create')->name('album.create');
+    Route::post('/create', 'AlbumController@store')->name('album.store');
+    Route::get('/{id}', 'AlbumController@show')->name('album.show');    
+    Route::get('/delete/{id}', 'AlbumController@destroy')->name('album.delete');
 });

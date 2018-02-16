@@ -20,7 +20,8 @@
         "vue": "^2.5.7"
     },
     "dependencies": {
-        "element-ui": "^2.1.0",
-        "vudal": "^1.11.5"
+        "element-ui": "^2.2.0",
+        "v-img": "^0.2.0",
+        "vue-form-wizard": "^0.8.2"
     }
 }

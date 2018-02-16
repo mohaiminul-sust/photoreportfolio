@@ -47,7 +47,7 @@
                                     <a href="{{ route('album.index') }}"> All Albums </a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('album.index') }}"> Create Album </a>    
+                                    <a href="{{ route('album.create') }}"> Create Album </a>    
                                 </li>
                             </ul>
                         </li>
@@ -98,11 +98,10 @@
         </nav>
 
         @yield('content')
+        @yield('modals')
     </div>
-
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
-
     <script type="text/javascript">
         @yield('script')
     </script>
