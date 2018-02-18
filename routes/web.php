@@ -24,6 +24,8 @@ Route::group(['prefix' => 'albums'], function() {
     Route::get('/all', 'AlbumController@getAlbums')->name('album.all');
     Route::get('/create', 'AlbumController@create')->name('album.create');
     Route::post('/create', 'AlbumController@store')->name('album.store');
-    Route::get('/{id}', 'AlbumController@show')->name('album.show');    
+    Route::get('/{id}', 'AlbumController@show')->name('album.show');
+    Route::get('/update/{id}', 'AlbumController@edit')->name('album.edit');
+    Route::post('/update/{id}', 'AlbumController@update')->name('album.update');
     Route::get('/delete/{id}', 'AlbumController@destroy')->name('album.delete');
 });

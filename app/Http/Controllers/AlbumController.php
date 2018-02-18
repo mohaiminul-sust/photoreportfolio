@@ -95,7 +95,7 @@ class AlbumController extends Controller
      */
     public function show($id)
     {
-        return new AlbumResource(Album::find($id));;
+        return new AlbumResource(Album::find($id));
     }
 
     /**
@@ -106,7 +106,7 @@ class AlbumController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('album.edit')->with('id', $id);
     }
 
     /**
@@ -118,7 +118,7 @@ class AlbumController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        return $request;
     }
 
     /**

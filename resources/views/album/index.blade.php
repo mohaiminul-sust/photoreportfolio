@@ -20,10 +20,6 @@
                     </div>
                     
                     <div class="pull-right">
-                        {{--  <a href="{{ route('album.create') }}">
-                            <el-button type="primary" icon="el-icon-edit"></el-button>
-                        </a>  --}}
-                        <span style="margin-left: 10px"></span>
                         <a href="{{ route('album.create') }}" class="pull-right">
                             <el-button type="success" icon="el-icon-plus"></el-button>
                         </a>
@@ -31,30 +27,43 @@
                 </el-header>
                 </div>
                 <!-- /.box-header -->
-                <el-row class="centered">
-                    <el-col class="cardbody" :span="4" v-for="album in albums.data" :key="album">
-                        <el-card :body-style="{ padding: '0px' }">
-                        <img v-img v-bind:src="album.cover_image" width="200" height="200" v-bind:alt="album.name" class="image">
-                        <div style="padding: 14px;">
-                            <span>@{{ album.name }}</span>
-                            <div class="bottom clearfix">
-                            <time class="time">
-                                <i class="el-icon-picture"></i>
-                                <span style="margin-left: 10px">@{{ album.photos.length }} photos in album</span>
-                            </time>
-                            <el-button v-on:click="deleteAlbum(album)" class="button" type="danger" icon="el-icon-delete"></el-button>
-                            <el-button v-on:click="showEditModal" class="button pull-right" type="primary" icon="el-icon-edit"></el-button>
+                <el-row>
+                    <div class="block text-center">
+                        <el-pagination
+                        layout="prev, pager, next"
+                        :total="albums.meta.total"
+                        :page-size="albums.meta.per_page"
+                        :current-page.sync="albums.meta.current_page"
+                        @current-change="handleCurrentPageChange">
+                        </el-pagination>
+                    </div>
+                </el-row>
+                <el-row>
+                    <div class="center">
+                        <el-col class="cardbody" :span="4" v-for="album in albums.data" :key="album">
+                            <el-card :body-style="{ padding: '0px' }">
+                            <img v-bind:src="album.cover_image" width="200" height="200" v-bind:alt="album.name" class="image">
+                            <div style="padding: 14px;">
+                                <span>@{{ album.name }}</span>
+                                <div class="bottom clearfix">
+                                <time class="time">
+                                    <i class="el-icon-picture"></i>
+                                    <span style="margin-left: 10px">@{{ album.photos.length }} photos in album</span>
+                                </time>
+                                <el-button v-on:click="deleteAlbum(album)" class="button" type="danger" icon="el-icon-delete"></el-button>
+                                <el-button v-on:click="showAlbum(album)" class="button pull-right" type="primary" icon="el-icon-edit"></el-button>
+                                </div>
                             </div>
-                        </div>
-                        </el-card>
-                    </el-col>
+                            </el-card>
+                        </el-col>
+                    </div>
                 </el-row>
                 <el-row class="box">
                     <div class="block text-center">
                         <el-pagination
                         layout="prev, pager, next"
                         :total="albums.meta.total"
-                        :per_page="albums.meta.per_page"
+                        :page-size="albums.meta.per_page"
                         :current-page="albums.meta.current_page"
                         @current-change="handleCurrentPageChange">
                         </el-pagination>
@@ -65,9 +74,7 @@
         <!-- /.box -->
         </div>
 
-        <modal v-if="presentingEditModal" @close="hideEditModal">
-            <h3 slot="header">custom header</h3>
-        </modal>
+        @include('album.editmodal')
     </div>
 </el-main>
 @endsection
@@ -78,7 +85,8 @@
         data: {
             albums: [],
             formerrors: {},
-            presentingEditModal: false
+            presentingEditModal: false,
+            selectedAlbum: {}
         }, 
         created(){
             this.fetchAlbums();
@@ -116,7 +124,11 @@
                     this.formerrors = error;
                 });
             },
-            showEditModal: function(album) {
+            showAlbum: function(album) {
+                var link = "{!! url('albums/update') !!}/" + album.id;
+                document.location.href = link;
+            },
+            showEditModal: function() {
                 this.presentingEditModal = true;
             },
             hideEditModal: function() {
