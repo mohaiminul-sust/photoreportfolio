@@ -50,8 +50,8 @@
                                     <i class="el-icon-picture"></i>
                                     <span style="margin-left: 10px">@{{ album.photos.length }} photos in album</span>
                                 </time>
-                                <el-button v-on:click="deleteAlbum(album)" class="button" type="danger" icon="el-icon-delete"></el-button>
-                                <el-button v-on:click="showAlbum(album)" class="button pull-right" type="primary" icon="el-icon-edit"></el-button>
+                                <el-button v-on:click="editAlbum(album)" class="button pull-right" type="danger" icon="el-icon-edit"></el-button>
+                                <el-button v-on:click="showAlbum(album)" class="button" type="primary" icon="el-icon-view"></el-button>
                                 </div>
                             </div>
                             </el-card>
@@ -103,16 +103,9 @@
                     this.formerrors = error;
                 });
             },
-            deleteAlbum: function (album) {
-                var link = "{!! url('albums/delete') !!}/" + album.id;
-                console.log("firing " + link);
-                axios.get(link)
-                .then(function (response) {
-                    this.albums = response.data
-                }.bind(this))
-                .catch(function (error) {
-                    this.formerrors = error;
-                });
+            editAlbum: function (album) {
+                var link = "{!! url('albums/update') !!}/" + album.id;
+                document.location.href = link;
             },
             handleCurrentPageChange: function(val) {
                 var link = "{!! url('albums/all') !!}?page=" + val;
@@ -125,14 +118,8 @@
                 });
             },
             showAlbum: function(album) {
-                var link = "{!! url('albums/update') !!}/" + album.id;
+                var link = "{!! url('albums/preview') !!}/" + album.id;
                 document.location.href = link;
-            },
-            showEditModal: function() {
-                this.presentingEditModal = true;
-            },
-            hideEditModal: function() {
-                this.presentingEditModal = false;
             }
         }
     })

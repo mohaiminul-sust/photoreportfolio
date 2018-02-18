@@ -109,6 +109,9 @@ class AlbumController extends Controller
         return view('album.edit')->with('id', $id);
     }
 
+    public function preview($id) {
+        return view('album.preview')->with('id', $id);
+    }
     /**
      * Update the specified resource in storage.
      *
@@ -121,6 +124,17 @@ class AlbumController extends Controller
         return $request;
     }
 
+    public function updateCoverImage(Request $request, $id) {
+        if($request->hasFile('cover_image'))
+        {
+            $file = $request->file('cover_image')->store('albums/cover');
+            $album->cover_image = $file;
+        }
+
+        $album->save();
+        flash('Album created!')->success();
+        return \Redirect::route('album.show');
+    }
     /**
      * Remove the specified resource from storage.
      *
@@ -130,9 +144,9 @@ class AlbumController extends Controller
     public function destroy($id)
     {
         $album = Album::find($id);
-        $album->delete();
-
-        $albums = Album::paginate(20);
-        return AlbumResource::collection($albums);
+        if ($album) {
+            $album->delete();
+        }
+        return response()->json(['Success, 200']);
     }
 }
