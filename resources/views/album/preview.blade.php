@@ -8,35 +8,38 @@
     <div id="preview-album" class="container">
         @include('flash::message')
         <div class="box box-primary">
-            <div class="box-header with-border">
-                <el-header>
-                    <h2 class="box-title center">Preview '@{{ album.name }}'</h2>
+            <div class="box-header with-border user-block">
+                    <img v-img class="img-circle img-bordered-sm" :src="album.cover_image" :alt="album.name">
+                    <span class="username">Album : @{{ album.name }}</span>
+                    <span class="description">Created @{{ album.created_ago }} at @{{ album.created_date }}</span>
                     <div class="pull-right">
                         <el-button @click="deleteAlbum(album)" type="danger" icon="el-icon-delete"></el-button>
                         <el-button @click="editAlbum(album)" class="pull-right" type="success" icon="el-icon-edit"></el-button>
                     </div>
-                </el-header>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                <div class="post">
-                    <div class="user-block">
-                        <img v-img class="img-circle img-bordered-sm" :src="album.cover_image" :alt="album.name">
-                        <span class="username">Created at @{{ album.created_date }}</span>
+                <div class="box">
+                    <div class="box-header">
+                        <strong><i class="fa fa-book margin-r-5"></i> Description</strong>
+                    </div>
+                    <div class="box-body">
                         <span class="description">@{{ album.description }}</span>
                     </div>
-                    <!-- /.user-block -->
+                </div>
                 <div v-if="album.photos.length > 0">
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Album photos</h3>
+                            <strong><i class="fa fa-image margin-r-5"></i> Photos</strong>
                             <p class="description">@{{ album.photos.length }} photos in album</p>
                         </div>
-                        <el-carousel :interval="4000" type="card" height="400px">
-                            <el-carousel-item v-for="photo in album.photos" :key="photo">
-                                <img v-img:group :src="photo.image" :alt="photo.caption">
-                            </el-carousel-item>
-                        </el-carousel>
+                        <div class="box-body">
+                            <el-carousel :interval="4000" type="card" height="400px">
+                                <el-carousel-item v-for="photo in album.photos" :key="photo">
+                                    <img v-img:group :src="photo.image" :alt="photo.caption">
+                                </el-carousel-item>
+                            </el-carousel>
+                        </div>
                     </div>
                 </div>
             </div>

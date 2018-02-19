@@ -29,4 +29,5 @@ Route::group(['prefix' => 'albums'], function() {
     Route::post('/update/{id}', 'AlbumController@update')->name('album.update');
     Route::get('/delete/{id}', 'AlbumController@destroy')->name('album.delete');
     Route::get('/preview/{id}', 'AlbumController@preview')->name('album.preview');
+    Route::post('/upload/cover/{id}', 'AlbumController@updateCoverImage')->name('album.uploadcover');
 });

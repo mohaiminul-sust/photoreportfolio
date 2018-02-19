@@ -60,8 +60,7 @@ class AlbumController extends Controller
     {
         $rules = [
             'name' => 'required',
-            'description' => 'required',
-            'cover_image'=>'required|image'
+            'description' => 'required'
         ];
 
         $validator = \Validator::make($request->toArray(), $rules);
@@ -74,13 +73,6 @@ class AlbumController extends Controller
         $album = new Album();
         $album->name = $request->name;
         $album->description = $request->description;
-        
-        if($request->hasFile('cover_image'))
-        {
-            $file = $request->file('cover_image')->store('albums/cover');
-            $album->cover_image = $file;
-        }
-
         $album->save();
         flash('Album created!')->success();
 
@@ -125,15 +117,20 @@ class AlbumController extends Controller
     }
 
     public function updateCoverImage(Request $request, $id) {
-        if($request->hasFile('cover_image'))
-        {
-            $file = $request->file('cover_image')->store('albums/cover');
-            $album->cover_image = $file;
+        $album = Album::find($id);
+
+        if ($album) {
+
+            if($request->hasFile('cover_image'))
+            {
+                $file = $request->file('cover_image')->store('albums/cover');
+                $album->cover_image = $file;
+            }
+    
+            $album->save();
         }
 
-        $album->save();
-        flash('Album created!')->success();
-        return \Redirect::route('album.show');
+        return new AlbumResource($album);
     }
     /**
      * Remove the specified resource from storage.

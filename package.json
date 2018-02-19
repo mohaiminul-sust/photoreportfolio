@@ -22,8 +22,6 @@
     },
     "dependencies": {
         "element-ui": "^2.2.0",
-        "v-img": "^0.2.0",
-        "v-tooltip": "^2.0.0-rc.31",
-        "vue-simple-uploader": "^0.4.0"
+        "v-img": "^0.2.0"
     }
 }

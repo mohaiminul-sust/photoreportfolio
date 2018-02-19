@@ -8,12 +8,10 @@
 require('./bootstrap');
 import ElementUI from 'element-ui';
 import VueImg from 'v-img';
-import uploader from 'vue-simple-uploader';
 
 window.Vue = require('vue');
 
 Vue.use(ElementUI);
-Vue.use(uploader);
 
 const vueImgConfig = {
     // Use `alt` attribute as gallery slide title
