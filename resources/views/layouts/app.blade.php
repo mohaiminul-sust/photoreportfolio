@@ -58,7 +58,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="{{ route('album.index') }}"> All Photos </a>
+                                    <a href="{{ route('album.index') }}"> Gallery </a>
                                 </li>
                                 <li>
                                     <a href="{{ route('album.index') }}"> Upload Photo(s) </a>    
@@ -76,6 +76,7 @@
                         @else
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
+                                    <img src="{{ Avatar::create(Auth::user()->name)->toBase64() }}" width=30 height=30/>
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu">

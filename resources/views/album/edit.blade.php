@@ -30,7 +30,7 @@
               <div class="box-body">
                     <div class="form-group">
                         <label for="Name">Name</label>
-                        <input class="form-control" placeholder="Enter album name" name="name" type="text" v-bind:value="album.name">
+                        <input class="form-control" placeholder="Enter album name" name="name" type="text" v-model="album.name">
                     </div>
                     <div class="form-group">
                         <label for="Description">Description</label>
@@ -105,7 +105,7 @@
         el: '#update-album',
         data: {
             album: {},
-            coverImageUrl: '',
+            coverImageBlob: '',
             headerInfo: {
                 'Access-Control-Allow-Origin': '*',
                 'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, DELETE',
@@ -129,7 +129,7 @@
                 });
             },
             handleAvatarSuccess(res, file) {
-                this.coverImageUrl = URL.createObjectURL(file.raw);
+                this.coverImageBlob = URL.createObjectURL(file.raw);
                 this.album = res.data;
                 this.$message.success('Cover image updated!');
             },
