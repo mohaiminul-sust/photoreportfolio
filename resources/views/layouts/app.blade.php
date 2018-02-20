@@ -58,7 +58,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="{{ route('album.index') }}"> Gallery </a>
+                                    <a href="{{ route('photo.index') }}"> Gallery </a>
                                 </li>
                                 <li>
                                     <a href="{{ route('album.index') }}"> Upload Photo(s) </a>    
@@ -66,7 +66,6 @@
                             </ul>
                         </li>
                     </ul>
-
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
@@ -80,6 +79,9 @@
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="{{ route('timeline') }}"> Timeline </a>  
+                                    </li>
                                     <li>
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();

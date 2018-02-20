@@ -85,8 +85,8 @@
                                             <i class="el-icon-time"></i>
                                             <span style="margin-left: 10px">@{{ photo.created_at }}</span>
                                         </time>
-                                        <el-button class="button" type="danger" icon="el-icon-delete"></el-button>
-                                        <el-button class="button pull-right" type="primary" icon="el-icon-edit"></el-button>
+                                        <el-button class="button" type="primary" icon="el-icon-view"></el-button>
+                                        <el-button class="button pull-right" type="danger" icon="el-icon-delete"></el-button>
                                         </div>
                                     </div>
                                     </el-card>

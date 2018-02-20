@@ -7,6 +7,8 @@ use JavaScript;
 use Auth;
 use App\Album as Album;
 use App\Photo as Photo;
+use App\Http\Resources\AlbumResource;
+use App\Http\Resources\PhotoResource;
 
 class HomeController extends Controller
 {
@@ -31,5 +33,21 @@ class HomeController extends Controller
         ->with('adminUser', Auth::user())
         ->with('albums', Album::all())
         ->with('photos', Photo::all());
+    }
+
+    public function timeline() {
+        return view('timeline');
+    }
+
+    public function getTimelineAlbums() {
+        $albums = Album::orderBy('created_at','desc')->get();
+
+        return AlbumResource::collection($albums);
+    }
+
+    public function getTimelinePhotos() {
+        $photos = Photo::orderBy('created_at','desc')->get();
+
+        return PhotoResource::collection($photos);
     }
 }

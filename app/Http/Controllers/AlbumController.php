@@ -76,7 +76,7 @@ class AlbumController extends Controller
         $album->save();
         flash('Album created!')->success();
 
-        return \Redirect::route('album.index');
+        return redirect()->route('album.index');
     }
 
     /**
@@ -134,12 +134,10 @@ class AlbumController extends Controller
         }
         
         flash('Album updated!')->success();
-        return \Redirect::route('album.update', $id);
+        return redirect()->route('album.update', $id);
     }
 
     public function updateCoverImage(Request $request, $id) {
-        
-        
         $album = Album::find($id);
 
         if ($album) {

@@ -19,6 +19,13 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::group(['prefix' => 'timeline'], function() {
+    Route::get('/', 'HomeController@timeline')->name('timeline');
+    Route::get('/albums', 'HomeController@getTimelineAlbums')->name('timeline.albums');
+    Route::get('/photos', 'HomeController@getTimelinePhotos')->name('timeline.photos');
+});
+
+
 Route::group(['prefix' => 'albums'], function() {
     Route::get('/', 'AlbumController@index')->name('album.index');
     Route::get('/all', 'AlbumController@getAlbums')->name('album.all');
@@ -30,4 +37,10 @@ Route::group(['prefix' => 'albums'], function() {
     Route::get('/delete/{id}', 'AlbumController@destroy')->name('album.delete');
     Route::get('/preview/{id}', 'AlbumController@preview')->name('album.preview');
     Route::post('/upload/cover/{id}', 'AlbumController@updateCoverImage')->name('album.uploadcover');
+});
+
+Route::group(['prefix' => 'photos'], function() {
+    Route::get('/', 'PhotoController@index')->name('photo.index');
+    Route::get('/all', 'PhotoController@getPhotos')->name('photo.all');
+    Route::get('/{id}', 'PhotoController@getPhoto')->name('photo.show');
 });
