@@ -6,12 +6,25 @@
  */
 
 require('./bootstrap');
-import ElementUI from 'element-ui'
-// import { VudalPlugin } from 'vudal';
+import ElementUI from 'element-ui';
+import VueImg from 'v-img';
 
 window.Vue = require('vue');
-window.Vue.use(ElementUI);
-// window.Vue.use(VudalPlugin);
+
+Vue.use(ElementUI);
+// Vue.use(VueCoreImageUpload);
+
+const vueImgConfig = {
+    // Use `alt` attribute as gallery slide title
+    altAsTitle: true,
+    // Display 'download' button near 'close' that opens source image in new tab
+    sourceButton: true,
+    // Event listener to open gallery will be applied to <img> element
+    openOn: 'click',
+    // Show thumbnails for all groups with more than 1 image
+    thumbnails: true,
+  }
+Vue.use(VueImg, vueImgConfig);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

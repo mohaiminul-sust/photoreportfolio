@@ -1,5 +1,7 @@
 {
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
-    "/css/albumcard.css": "/css/albumcard.css"
+    "/css/albumcard.css": "/css/albumcard.css",
+    "/css/createalbumform.css": "/css/createalbumform.css",
+    "/css/vuemodal.css": "/css/vuemodal.css"
 }

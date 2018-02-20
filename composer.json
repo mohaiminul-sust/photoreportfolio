@@ -1,13 +1,14 @@
 {
     "name": "laravel/laravel",
-    "description": "Photo manager project",
-    "keywords": ["framework", "laravel", "photo", "manager"],
+    "description": "Photo manager & portfolio SAAS project",
+    "keywords": ["framework", "laravel", "photo", "manager", "portfolio", "saas"],
     "license": "MIT",
     "type": "project",
     "require": {
         "php": ">=7.0.0",
         "fideloper/proxy": "~3.3",
         "garygreen/pretty-routes": "^1.0",
+        "laracasts/flash": "^3.0",
         "laracasts/utilities": "^3.0",
         "laravel/framework": "5.5.*",
         "laravel/tinker": "~1.0",
