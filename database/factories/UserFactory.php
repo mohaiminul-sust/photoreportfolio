@@ -26,7 +26,7 @@ $factory->define(App\Album::class, function (Faker $faker) {
     return [
         'name' => $faker->words($nb = 2, $asText = true),
         'description' => $faker->sentence($nbWords = 25, $variableNbWords = true),
-        'cover_image' => $faker->imageUrl($width = 800, $height = 600, 'nature')
+        'cover_image' => $faker->imageUrl($width = 200, $height = 200, 'cats')
     ];
 });
 
@@ -35,7 +35,7 @@ $factory->define(App\Photo::class, function (Faker $faker) {
     $albumIds = App\Album::all()->pluck('id')->toArray();
 
     return [
-        'image' => $faker->imageUrl($width = 800, $height = 600, 'nature'),
+        'image' => $faker->imageUrl($width = 800, $height = 600, 'cats'),
         'caption' => $faker->sentence($nbWords = 8, $variableNbWords = true),
         'notes' => $faker->text($maxNbChars = 200),
         'album_id' => $faker->randomElement($albumIds)

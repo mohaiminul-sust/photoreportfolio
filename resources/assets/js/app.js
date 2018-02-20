@@ -12,6 +12,7 @@ import VueImg from 'v-img';
 window.Vue = require('vue');
 
 Vue.use(ElementUI);
+// Vue.use(VueCoreImageUpload);
 
 const vueImgConfig = {
     // Use `alt` attribute as gallery slide title

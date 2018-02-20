@@ -96,7 +96,6 @@
                 var link = "{!! url('albums/all') !!}";
                 axios.get(link)
                 .then(function (response) {
-                    console.log(response);
                     this.albums = response.data;
                 }.bind(this))
                 .catch(function (error) {

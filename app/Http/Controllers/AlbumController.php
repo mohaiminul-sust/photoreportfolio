@@ -113,20 +113,46 @@ class AlbumController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return $request;
-    }
+        $rules = [
+            'name' => 'required',
+            'description' => 'required'
+        ];
 
-    public function updateCoverImage(Request $request, $id) {
+        $validator = \Validator::make($request->toArray(), $rules);
+        if($validator->fails()){
+            return \Redirect::route('album.update', $id)
+            ->withErrors($validator)
+            ->withInput();
+        }
+
         $album = Album::find($id);
 
         if ($album) {
+            $album->name = $request->name;
+            $album->description = $request->description;
+            $album->save();
+        }
+        
+        flash('Album updated!')->success();
+        return \Redirect::route('album.update', $id);
+    }
 
-            if($request->hasFile('cover_image'))
+    public function updateCoverImage(Request $request, $id) {
+        
+        
+        $album = Album::find($id);
+
+        if ($album) {
+            if($request->hasFile('file'))
             {
-                $file = $request->file('cover_image')->store('albums/cover');
-                $album->cover_image = $file;
+                $file = $request->file('file');
+
+                $destinationPath = public_path(). '/uploads/';
+                $filename = $file->getClientOriginalName();
+                $file->move($destinationPath, $filename);
+
+                $album->cover_image = url('/').'/uploads/'.$filename;
             }
-    
             $album->save();
         }
 

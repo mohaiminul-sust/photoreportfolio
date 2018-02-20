@@ -21,3 +21,7 @@
     height: 178px;
     display: block;
 }
+
+.avatar-uploader input {
+    display: none;
+}

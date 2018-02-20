@@ -1,7 +1,8 @@
 @extends('layouts.app')
 
 @section('style')
-<link href="{{ asset('css/albumcard.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/albumcard.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/createalbumform.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -43,19 +44,18 @@
 
             <div class="box">
                 <div class="box-header">
-
+                    <h3 class="box-title center">Upload Cover Image</h3>
                 </div>
                 <div class="box-body">
                     <el-upload
-                        ref="upload"
-                        class="upload-cover"
-                        action="{!! url('albums/upload/cover') !!}"
-                        :on-preview="handlePreview"
-                        :on-remove="handleRemove"
-                        :file-list="coverList"
-                        list-type="picture">
-                        <el-button size="small" type="primary">Click to upload</el-button>
-                        <div slot="tip" class="el-upload__tip">jpg/png files with a size less than 500kb</div>
+                    class="avatar-uploader"
+                    action="{!! route('album.uploadcover', $id) !!}"
+                    :headers="headerInfo"
+                    :show-file-list="false"
+                    :on-success="handleAvatarSuccess"
+                    :before-upload="beforeAvatarUpload">
+                    <img v-if="album.cover_image" :src="album.cover_image" class="avatar">
+                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
                 </div>
             </div>
@@ -65,9 +65,7 @@
                         <div class="box-header with-border">
                             <div>
                                 <h3 class="box-title center">Album Photo(s)</h3>
-                                <span class="description" style="margin-left: 20px">@{{ album.photos.length }} photos in album</span>        
-                                
-                                {{--  <span class="description" style="margin-left: 20px">@{{ albums.meta.from }} - @{{ albums.meta.to }} of @{{ albums.meta.total }} albums</span>          --}}
+                                <span class="description" style="margin-left: 20px">@{{ album.photos.length }} photos in album</span>
                             </div>
                             <div class="pull-right">
                                 <a href="#" class="pull-right">
@@ -107,7 +105,13 @@
         el: '#update-album',
         data: {
             album: {},
-            coverList: []
+            coverImageUrl: '',
+            headerInfo: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, DELETE',
+                'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, X-File-Name, X-File-Size, X-File-Type',
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
         }, 
         created(){
             this.fetchAlbum({!! $id !!});
@@ -118,21 +122,28 @@
                 console.log("firing " + link)
                 axios.get(link)
                 .then(function (response) {
-                    console.log(response);
                     this.album = response.data.data;
                 }.bind(this))
                 .catch(function (error) {
                     console.log(error);
                 });
             },
-            uploadCover: function(id) {
-
+            handleAvatarSuccess(res, file) {
+                this.coverImageUrl = URL.createObjectURL(file.raw);
+                this.album = res.data;
+                this.$message.success('Cover image updated!');
             },
-            deletePhoto: function(id) {
-
-            },
-            editPhoto: function(id) {
-
+            beforeAvatarUpload(file) {
+                const isJPG = file.type === 'image/jpeg';
+                const isLt2M = file.size / 1024 / 1024 < 2;
+        
+                if (!isJPG) {
+                    this.$message.error('Avatar picture must be JPG format!');
+                }
+                if (!isLt2M) {
+                    this.$message.error('Avatar picture size can not exceed 2MB!');
+                }
+                return isJPG && isLt2M;
             }
         }
     })

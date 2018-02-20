@@ -1,9 +1,5 @@
 @extends('layouts.app')
 
-@section('style')
-    <link href="{{ asset('css/createalbumform.css') }}" rel="stylesheet">
-@endsection
-
 @section('content')
     <div id="create-album" class="container">
         @include('flash::message')
@@ -26,27 +22,19 @@
             <!-- /.box-header -->
             <!-- form start -->
             {!! Form::open(['route' => 'album.store', 'files' => true]) !!}
-              <div class="box-body">
-                <div class="form-group">
-                    {!! Form::label('Name') !!}
-                    {!! Form::text('name', '', ['class'=>'form-control', 'placeholder'=>'Enter album name']) !!}
+                <div class="box-body">
+                    <div class="form-group">
+                        {!! Form::label('Name') !!}
+                        {!! Form::text('name', '', ['class'=>'form-control', 'placeholder'=>'Enter album name']) !!}
+                    </div>
+                    <div class="form-group">
+                        {!! Form::label('Description') !!}
+                        {!! Form::textarea('description', '', ['class'=>'form-control', 'placeholder'=>'Enter album description ...']) !!}
+                    </div>
                 </div>
-                <div class="form-group">
-                    {!! Form::label('Description') !!}
-                    {!! Form::textarea('description', '', ['class'=>'form-control', 'placeholder'=>'Enter album description ...']) !!}
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
-                {{--  <div class="form-group">
-                    <label for="coverimage">Cover Image</label>
-                    {!! Form::file('cover_image', ['multiple' => false, 'accept'=>'image/*']) !!}
-                </div>  --}}
-                {{--  <div class="form-group">
-                    <label for="albumphotos">Album Photo(s)</label>
-                    {!! Form::file('album_photos[]', ['multiple' => true, 'accept'=>'image/*']) !!}
-                </div>  --}}
-              </div>
-              <div class="box-footer">
-                <button type="submit" class="btn btn-primary">Submit</button>
-              </div>
             {!! Form::close() !!}
           </div>
     </div>
