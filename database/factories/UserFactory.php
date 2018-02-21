@@ -37,7 +37,7 @@ $factory->define(App\Photo::class, function (Faker $faker) {
     return [
         'image' => $faker->imageUrl($width = 800, $height = 600, 'nature'),
         'caption' => $faker->sentence($nbWords = 8, $variableNbWords = true),
-        'notes' => $faker->text($maxNbChars = 200),
+        'notes' => $faker->text($maxNbChars = 3000),
         'album_id' => $faker->randomElement($albumIds)
     ];
 });

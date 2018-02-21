@@ -13,8 +13,8 @@
                     <span class="username">Album : @{{ album.name }}</span>
                     <span class="description">Created @{{ album.created_ago }} at @{{ album.created_date }}</span>
                     <div class="pull-right">
-                        <el-button @click="deleteAlbum(album)" type="danger" icon="el-icon-delete"></el-button>
-                        <el-button @click="editAlbum(album)" class="pull-right" type="success" icon="el-icon-edit"></el-button>
+                        <el-button @click="deleteAlbum" type="danger" icon="el-icon-delete"></el-button>
+                        <el-button @click="editAlbum" class="pull-right" type="success" icon="el-icon-edit"></el-button>
                     </div>
             </div>
             <!-- /.box-header -->
@@ -69,8 +69,8 @@
                     console.log(error);
                 });
             },
-            deleteAlbum: function (album) {
-                var link = "{!! url('albums/delete') !!}/" + album.id;
+            deleteAlbum: function () {
+                var link = "{!! url('albums/delete') !!}/" + this.album.id;
                 console.log("firing " + link);
                 axios.get(link)
                 .then(function (response) {
@@ -81,8 +81,8 @@
                     this.formerrors = error;
                 });
             },
-            editAlbum: function(album) {
-                var link = "{!! url('albums/update') !!}/" + album.id;
+            editAlbum: function() {
+                var link = "{!! url('albums/update') !!}/" + this.album.id;
                 document.location.href = link;
             },
         }
