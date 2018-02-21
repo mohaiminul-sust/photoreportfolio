@@ -31,13 +31,19 @@ $factory->define(App\Album::class, function (Faker $faker) {
 });
 
 $factory->define(App\Photo::class, function (Faker $faker) {
-
     $albumIds = App\Album::all()->pluck('id')->toArray();
-
     return [
         'image' => $faker->imageUrl($width = 800, $height = 600, 'nature'),
         'caption' => $faker->sentence($nbWords = 8, $variableNbWords = true),
         'notes' => $faker->text($maxNbChars = 3000),
         'album_id' => $faker->randomElement($albumIds)
+    ];
+});
+
+$factory->define(App\Tag::class, function (Faker $faker) {
+    $photoIds = App\Photo::all()->pluck('id')->toArray();
+    return [
+        'tag' => $faker->word,
+        'photo_id' => $faker->randomElement($photoIds)
     ];
 });

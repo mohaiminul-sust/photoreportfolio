@@ -42,7 +42,7 @@
                     <div class="center">
                         <el-col class="cardbody" :span="4" v-for="photo in photos.data" :key="photo">
                             <el-card :body-style="{ padding: '0px' }">
-                            <img v-bind:src="photo.image" width="200" height="200" v-bind:alt="photo.caption" class="image">
+                            <img v-img:group v-bind:src="photo.image" width="200" height="200" v-bind:alt="photo.caption" class="image">
                             <div style="padding: 14px;">
                                 <span>@{{ photo.caption.length > 17 ? photo.caption.substring(0,17) + '...' : photo.caption }}</span>
                                 <div class="bottom clearfix">
@@ -50,6 +50,11 @@
                                     <i class="el-icon-time"></i>
                                     <span style="margin-left: 10px">@{{ photo.created_date }}</span>
                                 </time>
+                                <time class="time">
+                                    <i class="el-icon-time"></i>
+                                    <span style="margin-left: 10px">@{{ photo.album.name }}</span>
+                                </time>
+                                <hr>
                                 <el-button v-on:click="editPhoto(photo)" class="button pull-right" type="danger" icon="el-icon-edit"></el-button>
                                 <el-button v-on:click="showPhoto(photo)" class="button" type="primary" icon="el-icon-view"></el-button>
                                 </div>
