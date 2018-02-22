@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
 @section('style')
-<link href="{{ asset('css/albumcard.css') }}" rel="stylesheet">
+<link href="{{ asset('css/customcard.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
 <div class="container">
     @include('flash::message')
     <div id="photos">
-        <div class="col-xs-12">
+        <div v-loading="loading" class="col-xs-12">
             <div class="box">
                 <div class="box-header">
                 <el-header>
@@ -51,7 +51,7 @@
                                     <span style="margin-left: 10px">@{{ photo.created_date }}</span>
                                 </time>
                                 <time class="time">
-                                    <i class="el-icon-time"></i>
+                                    <i class="el-icon-menu"></i>
                                     <span style="margin-left: 10px">@{{ photo.album.name }}</span>
                                 </time>
                                 <hr>
@@ -87,7 +87,8 @@
         el: '#photos',
         data: {
             photos: [],
-            formerrors: {}
+            formerrors: {},
+            loading: true
         }, 
         created(){
             this.fetchPhotos();
@@ -95,9 +96,11 @@
         methods: {
             fetchPhotos: function() {
                 var link = "{!! url('photos/all') !!}";
+                this.loading = true;
                 axios.get(link)
                 .then(function (response) {
                     this.photos = response.data;
+                    this.loading = false;
                 }.bind(this))
                 .catch(function (error) {
                     this.formerrors = error;

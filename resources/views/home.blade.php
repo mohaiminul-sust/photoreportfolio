@@ -72,11 +72,9 @@
         el: '#home',
         data: {
             loadingDate: new Date().toLocaleString(),
-            albumsCount: {!! $albums->count() !!},
-            photosCount: {!! $photos->count() !!},
-            user: {!! json_encode($adminUser->toArray()) !!},
-            albums: {!! json_encode($albums->toArray()) !!},
-            photos: {!! json_encode($photos->toArray()) !!}
+            albumsCount: {!! $albumsCount !!},
+            photosCount: {!! $photosCount !!},
+            user: {!! json_encode($adminUser->toArray()) !!}
         }
     })
 @endsection

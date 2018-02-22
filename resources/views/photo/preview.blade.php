@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('style')
+    <link href="{{ asset('css/formtags.css') }}" rel="stylesheet">
+@endsection
+
 @section('content')
     <div id="preview-photo" class="container">
         <div class="box box-primary">
@@ -33,7 +37,15 @@
                 </div>
                 <div class="box">
                     <div class="box-header">
-                        <strong><i class="fa fa-image margin-r-5"></i> Story</strong>
+                        <strong><i class="fa fa-book margin-r-5"></i> Tags</strong>
+                    </div>
+                    <div class="box-body">
+                        <el-tag v-for="tag in photo.tags" :key="tag.id" class="customtag">@{{ tag.tag }}</el-tag>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="box-header">
+                        <strong><i class="fa fa-book margin-r-5"></i> Story</strong>
                     </div>
                     <div class="box-body">
                         <span class="description">@{{ photo.notes }}</span>

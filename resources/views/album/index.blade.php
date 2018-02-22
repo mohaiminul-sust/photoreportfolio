@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('style')
-<link href="{{ asset('css/albumcard.css') }}" rel="stylesheet">
+<link href="{{ asset('css/customcard.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -9,7 +9,7 @@
     @include('flash::message')
     <div id="album">
         <div class="col-xs-12">
-            <div class="box">
+            <div v-loading="loading" class="box">
                 <div class="box-header">
                 <el-header>
                     <div>
@@ -73,8 +73,6 @@
             </div>
         <!-- /.box -->
         </div>
-
-        @include('album.editmodal')
     </div>
 </el-main>
 @endsection
@@ -86,7 +84,7 @@
             albums: [],
             formerrors: {},
             presentingEditModal: false,
-            selectedAlbum: {}
+            loading: true
         }, 
         created(){
             this.fetchAlbums();
@@ -94,9 +92,11 @@
         methods: {
             fetchAlbums: function() {
                 var link = "{!! url('albums/all') !!}";
+                this.loading = true;
                 axios.get(link)
                 .then(function (response) {
                     this.albums = response.data;
+                    this.loading = false;
                 }.bind(this))
                 .catch(function (error) {
                     this.formerrors = error;

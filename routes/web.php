@@ -20,7 +20,8 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['prefix' => 'timeline'], function() {
-    Route::get('/', 'HomeController@timeline')->name('timeline');
+    Route::get('/album', 'HomeController@albumTimeline')->name('timeline.album');
+    Route::get('/photo', 'HomeController@photoTimeline')->name('timeline.photo');
     Route::get('/albums', 'HomeController@getTimelineAlbums')->name('timeline.albums');
     Route::get('/photos', 'HomeController@getTimelinePhotos')->name('timeline.photos');
 });

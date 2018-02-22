@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('style')
-    <link href="{{ asset('css/albumcard.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/customcard.css') }}" rel="stylesheet">
     <link href="{{ asset('css/createalbumform.css') }}" rel="stylesheet">
 @endsection
 

@@ -7,8 +7,7 @@ use JavaScript;
 use Auth;
 use App\Album as Album;
 use App\Photo as Photo;
-use App\Http\Resources\AlbumResource;
-use App\Http\Resources\PhotoResource;
+use Carbon\Carbon;
 
 class HomeController extends Controller
 {
@@ -31,23 +30,31 @@ class HomeController extends Controller
     {
         return view('home')
         ->with('adminUser', Auth::user())
-        ->with('albums', Album::all())
-        ->with('photos', Photo::all());
+        ->with('albumsCount', Album::count())
+        ->with('photosCount', Photo::count());
     }
 
-    public function timeline() {
-        return view('timeline');
+    public function albumTimeline() {
+        return view('timeline.album');
+    }
+
+    public function photoTimeline() {
+        return view('timeline.photo');
     }
 
     public function getTimelineAlbums() {
-        $albums = Album::orderBy('created_at','desc')->get();
+        $albums = Album::orderBy('created_at','desc')->get()->groupBy(function($date) {
+            return Carbon::parse($date->created_at)->format('l jS F Y'); 
+        });
 
-        return AlbumResource::collection($albums);
+        return $albums;
     }
 
     public function getTimelinePhotos() {
-        $photos = Photo::orderBy('created_at','desc')->get();
+        $photos = Photo::orderBy('created_at', 'desc')->get()->groupBy(function($date) {
+            return Carbon::parse($date->created_at)->format('l jS F Y'); //toFormattedDateString();
+        });
 
-        return PhotoResource::collection($photos);
+        return $photos;
     }
 }

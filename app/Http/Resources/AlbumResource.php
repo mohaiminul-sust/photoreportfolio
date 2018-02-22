@@ -24,8 +24,7 @@ class AlbumResource extends Resource
             'created_date' => Carbon::parse($this->created_at)->toDateTimeString(),
             'updated_date' => Carbon::parse($this->updated_at)->toDateTimeString(),
             'created_ago' => Carbon::parse($this->created_at)->diffForHumans(Carbon::now()),
-            'time_string_created' => Carbon::parse($this->created_at)->toFormattedDateString(),
-            'time_string_updated' => Carbon::parse($this->updated_at)->toFormattedDateString()
+            'updated_ago' => Carbon::parse($this->updated_at)->diffForHumans(Carbon::now())
         ];
     }
 }

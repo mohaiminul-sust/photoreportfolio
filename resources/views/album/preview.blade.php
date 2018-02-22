@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
 @section('style')
-<link href="{{ asset('css/albumcard.css') }}" rel="stylesheet">
+<link href="{{ asset('css/customcard.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
     <div id="preview-album" class="container">
         @include('flash::message')
-        <div class="box box-primary">
+        <div v-loading="loading" class="box box-primary">
             <div class="box-header with-border user-block">
                     <img v-img class="img-circle img-bordered-sm" :src="album.cover_image" :alt="album.name">
                     <span class="username">Album : @{{ album.name }}</span>
@@ -51,7 +51,8 @@
     var previewalbum = new Vue({
         el: '#preview-album',
         data: {
-            album: {}
+            album: {},
+            loading: true
         }, 
         created(){
             this.fetchAlbum({!! $id !!});
@@ -59,11 +60,12 @@
         methods: {
             fetchAlbum: function(id) {
                 var link = "{!! url('albums') !!}/" + id;
-                console.log("firing " + link)
+                console.log("firing " + link);
+                this.loading = true;
                 axios.get(link)
                 .then(function (response) {
-                    console.log(response);
                     this.album = response.data.data;
+                    this.loading = false;
                 }.bind(this))
                 .catch(function (error) {
                     console.log(error);
