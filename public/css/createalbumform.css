@@ -21,6 +21,16 @@
     height: auto;
     display: block;
 }
+.avatar-upload-photo {
+    width: 800px;
+    height: 600px;
+    display: block;
+}
+.avatar-upload-cover {
+    width: 200px;
+    height: 200px;
+    display: block;
+}
 .avatar-uploader input {
     display: none;
 }

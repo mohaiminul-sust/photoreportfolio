@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Album;
 use App\Http\Resources\AlbumResource;
+use App\Http\Resources\AlbumListResource;
 
 class AlbumController extends Controller
 {
@@ -40,6 +41,12 @@ class AlbumController extends Controller
         return AlbumResource::collection($albums);
     }
 
+    public function listAlbums() {
+        
+        $albums = Album::all();
+        // return $albums;
+        return AlbumListResource::collection($albums);
+    }
     /**
      * Show the form for creating a new resource.
      *

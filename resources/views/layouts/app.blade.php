@@ -61,7 +61,7 @@
                                     <a href="{{ route('photo.index') }}"> Gallery </a>
                                 </li>
                                 <li>
-                                    <a href="#"> Upload Photo(s) </a>    
+                                    <a href="{{ route('photo.uploadimage') }}"> Upload Photo(s) </a>    
                                 </li>
                             </ul>
                         </li>

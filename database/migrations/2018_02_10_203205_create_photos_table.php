@@ -17,7 +17,7 @@ class CreatePhotosTable extends Migration
             $table->increments('id');
             $table->integer('album_id')->unsigned();
             $table->string('image');
-            $table->string('caption');
+            $table->string('caption')->nullable();
             $table->text('notes')->nullable();
             $table->timestamps();
 

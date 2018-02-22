@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     @include('flash::message')
-    <div id="photo-time">
+    <div id="photo-time" v-cloak>
         <div v-loading="loading" class="box">
             <div class="box-header">
                 <el-header>

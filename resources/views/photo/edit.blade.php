@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('style')
-    <link href="{{ asset('css/customcard.css') }}" rel="stylesheet">
     <link href="{{ asset('css/createalbumform.css') }}" rel="stylesheet">
     <link href="{{ asset('css/formtags.css') }}" rel="stylesheet">
 @endsection
@@ -76,7 +75,7 @@
                     <div class="image-container">
                         <el-upload
                         class="avatar-uploader"
-                        action="{!! route('photo.uploadimage', $id) !!}"
+                        action="{!! route('photo.updateimage', $id) !!}"
                         :headers="headerInfo"
                         :show-file-list="false"
                         :on-success="handleAvatarSuccess"

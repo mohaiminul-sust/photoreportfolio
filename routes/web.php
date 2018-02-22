@@ -30,6 +30,7 @@ Route::group(['prefix' => 'timeline'], function() {
 Route::group(['prefix' => 'albums'], function() {
     Route::get('/', 'AlbumController@index')->name('album.index');
     Route::get('/all', 'AlbumController@getAlbums')->name('album.all');
+    Route::get('/list', 'AlbumController@listAlbums')->name('album.list');
     Route::get('/create', 'AlbumController@create')->name('album.create');
     Route::post('/create', 'AlbumController@store')->name('album.store');
     Route::get('/{id}', 'AlbumController@show')->name('album.show');
@@ -44,13 +45,13 @@ Route::group(['prefix' => 'photos'], function() {
     Route::get('/', 'PhotoController@index')->name('photo.index');
     Route::get('/all', 'PhotoController@getPhotos')->name('photo.all');
     Route::get('/{id}', 'PhotoController@show')->name('photo.show');
-    Route::get('/create', 'PhotoController@create')->name('photo.create');
-    Route::post('/create', 'PhotoController@store')->name('photo.store');
+    Route::get('/upload/image/new', 'PhotoController@uploadimage')->name('photo.uploadimage');
+    Route::post('/create/{id}', 'PhotoController@store')->name('photo.store');
     Route::get('/update/{id}', 'PhotoController@edit')->name('photo.edit');
     Route::post('/update/{id}', 'PhotoController@update')->name('photo.update');
     Route::get('/delete/{id}', 'PhotoController@destroy')->name('photo.delete');
     Route::get('/preview/{id}', 'PhotoController@preview')->name('photo.preview');
-    Route::post('/upload/image/{id}', 'PhotoController@updateImage')->name('photo.uploadimage');
+    Route::post('/upload/image/{id}', 'PhotoController@updateImage')->name('photo.updateimage');
     Route::get('/album/{id}', 'PhotoController@getPhotosByAlbum')->name('photo.byalbum');
     Route::group(['prefix' => 'tags'], function() {
         Route::post('/create', 'TagController@create')->name('photo.tag.create');

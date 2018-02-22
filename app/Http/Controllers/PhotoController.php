@@ -49,17 +49,29 @@ class PhotoController extends Controller
         return PhotoResource::collection($photos);
     }
 
+    public function uploadimage() {
+        return view('photo.upload');
+    }
+
+    public function store(Request $request, $id) {
+        if($request->hasFile('file'))
+        {
+            $file = $request->file('file');
+            $destinationPath = public_path().'/uploads/albums/'.$id.'/photos/';
+            $filename = $file->getClientOriginalName();
+            $file->move($destinationPath, $filename);
+
+            $photo = new Photo();
+            $photo->image = url('/').'/uploads/albums/'.$id.'/photos/'.$filename;
+            $photo->album_id = $id;
+            $photo->save();
+
+            return new PhotoResource($photo);
+        }
+    }
+
     public function preview($id){
         return view('photo.preview')->with('id', $id);
-    }
-
-    public function create() {
-        return view('photo.create');
-    }
-
-    public function store(Request $request) {
-
-        return $request;
     }
 
     public function edit($id) {
