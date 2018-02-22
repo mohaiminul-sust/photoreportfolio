@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <div id="upload-photo" class="container">
+    <div id="upload-photo-by-album" class="container">
         @include('flash::message')
         <div class="box box-primary">
             <div class="box-header with-border">
@@ -15,24 +15,6 @@
             <!-- form start -->
             <div class="box-body">
                 <div class="box">
-                    <div class="box-header">
-                        <h3 class="box-title center">Choose Album</h3>
-                    </div>
-                    <div class="box-body">
-                        <el-select v-model="value" placeholder="Select">
-                        <el-option
-                            v-for="item in albumlist"
-                            :key="item"
-                            :label="item.name"
-                            :value="item.id">
-                        </el-option>
-                        </el-select>
-                    </div>
-                </div>
-                <div class="box">
-                    <div class="box-header">
-                        <h3 class="box-title center">Upload Image</h3>
-                    </div>
                     <div class="box-body">
                         <div class="image-container">
                             <el-upload
@@ -55,7 +37,7 @@
 
 @section('script')
     var updatephoto = new Vue({
-        el: '#upload-photo',
+        el: '#upload-photo-by-album',
         data: {
             imageBlob: '',
             headerInfo: {
@@ -63,15 +45,14 @@
                 'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, DELETE',
                 'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, X-File-Name, X-File-Size, X-File-Type',
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }, 
-            albumlist: [],
-            value: '',
+            },
+            albumId: {!! $id !!},
             loading: false,
             photo: {}
         },
         computed: {
             uploadUrl: function() {
-                return "{!! url('photos/create') !!}/" + this.value;
+                return "{!! url('photos/create') !!}/" + this.albumId;
             } 
         },
         created() {
@@ -111,9 +92,6 @@
                 }
                 if (!isLt2M) {
                     this.$message.error('Photo size can not exceed 20MB!');
-                }
-                if(this.value.length === 0) {
-                    this.$message.warning('Choose album to upload photo first');
                 }
                 return isJPG && isLt2M;
             }

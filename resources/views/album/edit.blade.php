@@ -71,7 +71,7 @@
                                 <span class="description" style="margin-left: 20px">@{{ photos.meta.from }} - @{{ photos.meta.to }} of @{{ photos.meta.total }} photos</span>  
                             </div>
                             <div class="pull-right">
-                                <a href="#" class="pull-right">
+                                <a href="{{ route('photo.uploadimagebyalbum', $id) }}" class="pull-right">
                                     <el-button type="success" icon="el-icon-plus"></el-button>
                                 </a>
                             </div>
