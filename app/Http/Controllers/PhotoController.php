@@ -67,6 +67,7 @@ class PhotoController extends Controller
             $photo->save();
 
             return new PhotoResource($photo);
+            // return response()->json(['Success, 200']);
         }
     }
 

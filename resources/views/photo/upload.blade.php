@@ -78,7 +78,8 @@
             }, 
             albumlist: [],
             value: '',
-            loading: false
+            loading: false,
+            photo: {}
         },
         computed: {
             uploadUrl: function() {
@@ -104,7 +105,7 @@
             handleAvatarSuccess(res, file) {
                 this.coverImageBlob = URL.createObjectURL(file.raw);
                 this.$message.success('Image uploaded!');
-                console.log(res);
+                this.photo = res.data.data;
                 var link = "{!! url('photos/update') !!}/" + res.data.id;
                 document.location.href = link;
             },
