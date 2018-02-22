@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <div id="preview-album" class="container">
+    <div id="preview-album" class="container" v-cloak>
         @include('flash::message')
         <div v-loading="loading" class="box box-primary">
             <div class="box-header with-border user-block">
@@ -59,7 +59,7 @@
                                         <el-card :body-style="{ padding: '0px' }">
                                         <img v-img:group v-bind:src="photo.image" width="200" height="200" v-bind:alt="photo.caption" class="image">
                                         <div style="padding: 14px;">
-                                            <span>@{{ photo.caption.length > 17 ? photo.caption.substring(0,17) + '...' : photo.caption }}</span>
+                                            <span>@{{ trimmedText(photo.caption, 17) }}</span>
                                             <div class="bottom clearfix">
                                             <time class="time">
                                                 <i class="el-icon-time"></i>
@@ -164,6 +164,9 @@
             editPhoto: function(photo) {
                 var link = "{!! url('photos/update') !!}/" + photo.id;
                 document.location.href = link;
+            },
+            trimmedText: function(text, chars) {
+                return text.length > chars ? text.substring(0, chars) + '...' : text;
             }
         }
     })

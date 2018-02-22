@@ -73,16 +73,19 @@
                     <h3 class="box-title center">Update Image</h3>
                 </div>
                 <div class="box-body">
-                    <el-upload
-                    class="avatar-uploader"
-                    action="{!! route('photo.uploadimage', $id) !!}"
-                    :headers="headerInfo"
-                    :show-file-list="false"
-                    :on-success="handleAvatarSuccess"
-                    :before-upload="beforeAvatarUpload">
-                    <img v-if="photo.image" :src="photo.image" class="avatar">
-                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                    </el-upload>
+                    <div class="image-container">
+                        <el-upload
+                        class="avatar-uploader"
+                        action="{!! route('photo.uploadimage', $id) !!}"
+                        :headers="headerInfo"
+                        :show-file-list="false"
+                        :on-success="handleAvatarSuccess"
+                        :before-upload="beforeAvatarUpload">
+                        <img v-if="photo.image" :src="photo.image" class="avatar">
+                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                        </el-upload>
+                        <div class="image-centered-text">Click to upload</div>
+                    </div>
                 </div>
             </div>
 
@@ -122,7 +125,7 @@
             },
             handleAvatarSuccess(res, file) {
                 this.coverImageBlob = URL.createObjectURL(file.raw);
-                this.album = res.data;
+                this.photo = res.data;
                 this.$message.success('Image updated!');
             },
             beforeAvatarUpload(file) {

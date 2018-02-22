@@ -5,9 +5,9 @@
 @endsection
 
 @section('content')
-<el-main class="container">
+<div class="container">
     @include('flash::message')
-    <div id="album">
+    <div id="album" v-cloak>
         <div class="col-xs-12">
             <div v-loading="loading" class="box">
                 <div class="box-header">
@@ -44,7 +44,7 @@
                             <el-card :body-style="{ padding: '0px' }">
                             <img v-bind:src="album.cover_image" width="200" height="200" v-bind:alt="album.name" class="image">
                             <div style="padding: 14px;">
-                                <span>@{{ album.name }}</span>
+                                <span>@{{ trimmedText(album.name, 17) }}</span>
                                 <div class="bottom clearfix">
                                 <time class="time">
                                     <i class="el-icon-picture"></i>
@@ -74,7 +74,7 @@
         <!-- /.box -->
         </div>
     </div>
-</el-main>
+</div>
 @endsection
 
 @section('script')
@@ -119,6 +119,9 @@
             showAlbum: function(album) {
                 var link = "{!! url('albums/preview') !!}/" + album.id;
                 document.location.href = link;
+            },
+            trimmedText: function(text, chars) {
+                return text.length > chars ? text.substring(0, chars) + '...' : text;
             }
         }
     })

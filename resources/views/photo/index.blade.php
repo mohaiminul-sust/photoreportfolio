@@ -7,7 +7,7 @@
 @section('content')
 <div class="container">
     @include('flash::message')
-    <div id="photos">
+    <div id="photos" v-cloak>
         <div v-loading="loading" class="col-xs-12">
             <div class="box">
                 <div class="box-header">
@@ -18,7 +18,6 @@
                         </a>
                         <span class="description" style="margin-left: 20px">@{{ photos.meta.from }} - @{{ photos.meta.to }} of @{{ photos.meta.total }} photos</span>        
                     </div>
-                    
                     <div class="pull-right">
                         <a href="#" class="pull-right">
                             <el-button type="success" icon="el-icon-plus"></el-button>
@@ -44,7 +43,7 @@
                             <el-card :body-style="{ padding: '0px' }">
                             <img v-img:group v-bind:src="photo.image" width="200" height="200" v-bind:alt="photo.caption" class="image">
                             <div style="padding: 14px;">
-                                <span>@{{ photo.caption.length > 17 ? photo.caption.substring(0,17) + '...' : photo.caption }}</span>
+                                <span>@{{ trimmedText(photo.caption, 17) }}</span>
                                 <div class="bottom clearfix">
                                 <time class="time">
                                     <i class="el-icon-time"></i>
@@ -52,7 +51,7 @@
                                 </time>
                                 <time class="time">
                                     <i class="el-icon-menu"></i>
-                                    <span style="margin-left: 10px">@{{ photo.album.name }}</span>
+                                    <span style="margin-left: 10px">@{{ trimmedText(photo.album.name, 17) }}</span>
                                 </time>
                                 <hr>
                                 <el-button v-on:click="editPhoto(photo)" class="button pull-right" type="danger" icon="el-icon-edit"></el-button>
@@ -123,6 +122,9 @@
             showPhoto: function(photo) {
                 var link = "{!! url('photos/preview') !!}/" + photo.id;
                 document.location.href = link;
+            },
+            trimmedText: function(text, chars) {
+                return text.length > chars ? text.substring(0, chars) + '...' : text;
             }
         }
     })

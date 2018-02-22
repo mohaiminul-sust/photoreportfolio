@@ -12,7 +12,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/vuemodal.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/cloak.css') }}" rel="stylesheet">
     @yield('style')
 </head>
 <body>

@@ -24,7 +24,7 @@
                         <strong><i class="fa fa-book margin-r-5"></i> Photo</strong>
                     </div>
                     <div class="box-body">
-                        <img v-img class="image-responsive" :src="photo.image" :alt="photo.caption">
+                        <img v-img class="image-responsive" :src="photo.image" :alt="photo.caption" id="photoimg" ref="photoimg">
                     </div>
                 </div>
                 <div class="box">
@@ -62,7 +62,7 @@
         data: {
             photo: {}
         }, 
-        created(){
+        created() {
             this.fetchPhoto({!! $id !!});
         },
         methods: {
@@ -71,7 +71,6 @@
                 console.log("firing " + link)
                 axios.get(link)
                 .then(function (response) {
-                    console.log(response);
                     this.photo = response.data.data;
                 }.bind(this))
                 .catch(function (error) {

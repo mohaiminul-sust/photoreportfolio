@@ -6,7 +6,7 @@
 @endsection
 
 @section('content')
-    <div id="update-album" class="container">
+    <div id="update-album" class="container" v-cloak>
         @include('flash::message')
         @if(count($errors) > 0)
         <div class="alert alert-block alert-error fade in" id="error-block">
@@ -47,16 +47,19 @@
                     <h3 class="box-title center">Upload Cover Image</h3>
                 </div>
                 <div class="box-body">
-                    <el-upload
-                    class="avatar-uploader"
-                    action="{!! route('album.uploadcover', $id) !!}"
-                    :headers="headerInfo"
-                    :show-file-list="false"
-                    :on-success="handleAvatarSuccess"
-                    :before-upload="beforeAvatarUpload">
-                    <img v-if="album.cover_image" :src="album.cover_image" class="avatar">
-                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                    </el-upload>
+                    <div class="image-container">
+                        <el-upload
+                        class="avatar-uploader"
+                        action="{!! route('album.uploadcover', $id) !!}"
+                        :headers="headerInfo"
+                        :show-file-list="false"
+                        :on-success="handleAvatarSuccess"
+                        :before-upload="beforeAvatarUpload">
+                        <img v-if="album.cover_image" :src="album.cover_image" class="avatar">
+                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                        </el-upload>
+                        <div class="image-centered-text">Click to upload</div>
+                    </div>
                 </div>
             </div>
 
@@ -90,7 +93,7 @@
                                     <el-card :body-style="{ padding: '0px' }">
                                     <img v-img:group v-bind:src="photo.image" width="200" height="200" v-bind:alt="photo.caption" class="image">
                                     <div style="padding: 14px;">
-                                        <span>@{{ photo.caption.length > 17 ? photo.caption.substring(0,17) + '...' : photo.caption }}</span>
+                                        <span>@{{ trimmedText(photo.caption, 17) }}</span>
                                         <div class="bottom clearfix">
                                         <time class="time">
                                             <i class="el-icon-time"></i>
@@ -208,6 +211,9 @@
                     this.$message.error('Avatar picture size can not exceed 20MB!');
                 }
                 return isJPG && isLt2M;
+            },
+            trimmedText: function(text, chars) {
+                return text.length > chars ? text.substring(0, chars) + '...' : text;
             }
         }
     })
