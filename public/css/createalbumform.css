@@ -1,5 +1,5 @@
 .avatar-uploader .el-upload {
-    border: 1px dashed #d9d9d9;
+    border: 3px dashed #d9d9d9;
     border-radius: 6px;
     cursor: pointer;
     position: relative;
@@ -11,17 +11,38 @@
 .avatar-uploader-icon {
     font-size: 28px;
     color: #8c939d;
-    width: 178px;
-    height: 178px;
+    width: 100%;
+    height: auto;
     line-height: 178px;
     text-align: center;
 }
 .avatar {
-    width: 178px;
-    height: 178px;
+    width: 100%;
+    height: auto;
     display: block;
 }
-
+.avatar-upload-photo {
+    width: 800px;
+    height: 600px;
+    display: block;
+}
+.avatar-upload-cover {
+    width: 200px;
+    height: 200px;
+    display: block;
+}
 .avatar-uploader input {
     display: none;
+}
+.image-container {
+    position: relative;
+    text-align: center;
+    color: white;
+}
+.image-centered-text {
+    position: absolute;
+    font-size: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }

@@ -14,4 +14,8 @@ class Photo extends Model
     {
         return $this->belongsTo('App\Album');
     }
+
+    public function tags(){
+        return $this->hasMany('App\Tag');
+    }
 }

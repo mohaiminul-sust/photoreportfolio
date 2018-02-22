@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Album;
 use App\Http\Resources\AlbumResource;
+use App\Http\Resources\AlbumListResource;
 
 class AlbumController extends Controller
 {
@@ -40,6 +41,12 @@ class AlbumController extends Controller
         return AlbumResource::collection($albums);
     }
 
+    public function listAlbums() {
+        
+        $albums = Album::all();
+        // return $albums;
+        return AlbumListResource::collection($albums);
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -76,7 +83,7 @@ class AlbumController extends Controller
         $album->save();
         flash('Album created!')->success();
 
-        return \Redirect::route('album.index');
+        return redirect()->route('album.index');
     }
 
     /**
@@ -134,12 +141,10 @@ class AlbumController extends Controller
         }
         
         flash('Album updated!')->success();
-        return \Redirect::route('album.update', $id);
+        return redirect()->route('album.update', $id);
     }
 
     public function updateCoverImage(Request $request, $id) {
-        
-        
         $album = Album::find($id);
 
         if ($album) {
@@ -147,13 +152,13 @@ class AlbumController extends Controller
             {
                 $file = $request->file('file');
 
-                $destinationPath = public_path(). '/uploads/';
+                $destinationPath = public_path().'/uploads/albums/'.$album.id.'/cover/';
                 $filename = $file->getClientOriginalName();
                 $file->move($destinationPath, $filename);
 
-                $album->cover_image = url('/').'/uploads/'.$filename;
+                $album->cover_image = url('/').'/uploads/albums/'.$album.id.'/cover/'.$filename;
+                $album->save();
             }
-            $album->save();
         }
 
         return new AlbumResource($album);
@@ -170,6 +175,8 @@ class AlbumController extends Controller
         if ($album) {
             $album->delete();
         }
+
+        flash('Album deleted!')->success();
         return response()->json(['Success, 200']);
     }
 }

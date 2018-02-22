@@ -23,7 +23,8 @@ class AlbumResource extends Resource
             'photos' => $this->photos,
             'created_date' => Carbon::parse($this->created_at)->toDateTimeString(),
             'updated_date' => Carbon::parse($this->updated_at)->toDateTimeString(),
-            'created_ago' => Carbon::parse($this->created_at)->diffForHumans(Carbon::now())
+            'created_ago' => Carbon::parse($this->created_at)->diffForHumans(Carbon::now()),
+            'updated_ago' => Carbon::parse($this->updated_at)->diffForHumans(Carbon::now())
         ];
     }
 }

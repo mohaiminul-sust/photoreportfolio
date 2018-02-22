@@ -12,7 +12,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/vuemodal.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/cloak.css') }}" rel="stylesheet">
     @yield('style')
 </head>
 <body>
@@ -58,15 +58,27 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="{{ route('album.index') }}"> All Photos </a>
+                                    <a href="{{ route('photo.index') }}"> Gallery </a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('album.index') }}"> Upload Photo(s) </a>    
+                                    <a href="{{ route('photo.uploadimage') }}"> Upload Photo(s) </a>    
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
+                                Timeline <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="{{ route('timeline.album') }}"> Album </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('timeline.photo') }}"> Photo </a>
                                 </li>
                             </ul>
                         </li>
                     </ul>
-
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
@@ -76,6 +88,7 @@
                         @else
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
+                                    <img src="{{ Avatar::create(Auth::user()->name)->toBase64() }}" width=30 height=30/>
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu">

@@ -10,7 +10,7 @@ class Album extends Model
 
     protected $guarded = [];
 
-    public function Photos(){
+    public function photos(){
         return $this->hasMany('App\Photo');
     }
 }

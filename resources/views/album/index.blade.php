@@ -1,15 +1,15 @@
 @extends('layouts.app')
 
 @section('style')
-<link href="{{ asset('css/albumcard.css') }}" rel="stylesheet">
+<link href="{{ asset('css/customcard.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
-<el-main class="container">
+<div class="container">
     @include('flash::message')
-    <div id="album">
+    <div id="album" v-cloak>
         <div class="col-xs-12">
-            <div class="box">
+            <div v-loading="loading" class="box">
                 <div class="box-header">
                 <el-header>
                     <div>
@@ -44,7 +44,7 @@
                             <el-card :body-style="{ padding: '0px' }">
                             <img v-bind:src="album.cover_image" width="200" height="200" v-bind:alt="album.name" class="image">
                             <div style="padding: 14px;">
-                                <span>@{{ album.name }}</span>
+                                <span>@{{ trimmedText(album.name, 17) }}</span>
                                 <div class="bottom clearfix">
                                 <time class="time">
                                     <i class="el-icon-picture"></i>
@@ -73,10 +73,8 @@
             </div>
         <!-- /.box -->
         </div>
-
-        @include('album.editmodal')
     </div>
-</el-main>
+</div>
 @endsection
 
 @section('script')
@@ -86,7 +84,7 @@
             albums: [],
             formerrors: {},
             presentingEditModal: false,
-            selectedAlbum: {}
+            loading: true
         }, 
         created(){
             this.fetchAlbums();
@@ -94,9 +92,11 @@
         methods: {
             fetchAlbums: function() {
                 var link = "{!! url('albums/all') !!}";
+                this.loading = true;
                 axios.get(link)
                 .then(function (response) {
                     this.albums = response.data;
+                    this.loading = false;
                 }.bind(this))
                 .catch(function (error) {
                     this.formerrors = error;
@@ -119,6 +119,9 @@
             showAlbum: function(album) {
                 var link = "{!! url('albums/preview') !!}/" + album.id;
                 document.location.href = link;
+            },
+            trimmedText: function(text, chars) {
+                return text.length > chars ? text.substring(0, chars) + '...' : text;
             }
         }
     })

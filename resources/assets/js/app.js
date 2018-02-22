@@ -10,9 +10,9 @@ import ElementUI from 'element-ui';
 import VueImg from 'v-img';
 
 window.Vue = require('vue');
+window.EXIF = require('exif-js');
 
 Vue.use(ElementUI);
-// Vue.use(VueCoreImageUpload);
 
 const vueImgConfig = {
     // Use `alt` attribute as gallery slide title
