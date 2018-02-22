@@ -10,7 +10,6 @@ import ElementUI from 'element-ui';
 import VueImg from 'v-img';
 
 window.Vue = require('vue');
-window.EXIF = require('exif-js');
 
 Vue.use(ElementUI);
 

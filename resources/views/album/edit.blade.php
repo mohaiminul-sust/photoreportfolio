@@ -213,6 +213,9 @@
                 return isJPG && isLt2M;
             },
             trimmedText: function(text, chars) {
+                if(text == null) {
+                    return;
+                }
                 return text.length > chars ? text.substring(0, chars) + '...' : text;
             }
         }

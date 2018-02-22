@@ -6,7 +6,7 @@
 @endsection
 
 @section('content')
-    <div id="update-photo" class="container">
+    <div id="update-photo" class="container" v-cloak>
         @include('flash::message')
         @if(count($errors) > 0)
         <div class="alert alert-block alert-error fade in" id="error-block">

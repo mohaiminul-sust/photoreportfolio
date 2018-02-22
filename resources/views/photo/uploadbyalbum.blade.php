@@ -24,7 +24,7 @@
                             :show-file-list="false"
                             :on-success="handleAvatarSuccess"
                             :before-upload="beforeAvatarUpload">
-                            <img v-if="imageBlob" :src="imageBlob" class="avatar" width=800 height=600>
+                            <img v-if="imageBlob" :src="imageBlob" class="avatar" id="photo" ref="photo" width=800 height=600>
                             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                             </el-upload>
                         </div>
@@ -48,7 +48,8 @@
             },
             albumId: {!! $id !!},
             loading: false,
-            photo: {}
+            photo: {},
+            exif: {}
         },
         computed: {
             uploadUrl: function() {
@@ -72,15 +73,10 @@
                 });
             },
             handleAvatarSuccess(res, file) {
-                this.coverImageBlob = URL.createObjectURL(file.raw);
+                this.imageBlob = URL.createObjectURL(file.raw);
                 this.$message.success('Image uploaded!');
-                this.photo = res.data.data;
-                EXIF.getData(file, function() {
-                    var allMetaData = EXIF.getAllTags(this);
-                    console.log('METAS');
-                    console.log(allMetaData);
-                });
-                var link = "{!! url('photos/update') !!}/" + res.data.id;
+                this.photo = res.data;
+                var link = "{!! url('photos/update') !!}/" + this.photo.id;
                 document.location.href = link;
             },
             beforeAvatarUpload(file) {

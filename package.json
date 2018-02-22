@@ -23,7 +23,6 @@
     },
     "dependencies": {
         "element-ui": "^2.2.0",
-        "exif-js": "^2.3.0",
         "v-img": "^0.2.0"
     }
 }
