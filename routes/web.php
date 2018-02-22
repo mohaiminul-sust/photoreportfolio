@@ -50,4 +50,11 @@ Route::group(['prefix' => 'photos'], function() {
     Route::post('/update/{id}', 'PhotoController@update')->name('photo.update');
     Route::get('/delete/{id}', 'PhotoController@destroy')->name('photo.delete');
     Route::get('/preview/{id}', 'PhotoController@preview')->name('photo.preview');
+    Route::post('/upload/image/{id}', 'PhotoController@updateImage')->name('photo.uploadimage');
+    Route::get('/album/{id}', 'PhotoController@getPhotosByAlbum')->name('photo.byalbum');
+    Route::group(['prefix' => 'tags'], function() {
+        Route::post('/create', 'TagController@create')->name('photo.tag.create');
+        Route::get('/delete/{id}', 'TagController@destroy')->name('photo.tag.delete');
+    });
 });
+

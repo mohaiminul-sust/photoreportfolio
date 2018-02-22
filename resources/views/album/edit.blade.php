@@ -20,7 +20,7 @@
             </ul>
         </div>
         @endif
-        <div class="box box-primary">
+        <div v-loading="loading" class="box box-primary">
             <div class="box-header with-border">
               <h3 class="box-title center">Update Album</h3>
             </div>
@@ -64,8 +64,8 @@
                     <div class="box">
                         <div class="box-header with-border">
                             <div>
-                                <h3 class="box-title center">Album Photo(s)</h3>
-                                <span class="description" style="margin-left: 20px">@{{ album.photos.length }} photos in album</span>
+                                <h3 class="box-title center">Album Photos (@{{ photos.meta.total }})</h3>
+                                <span class="description" style="margin-left: 20px">@{{ photos.meta.from }} - @{{ photos.meta.to }} of @{{ photos.meta.total }} photos</span>  
                             </div>
                             <div class="pull-right">
                                 <a href="#" class="pull-right">
@@ -74,8 +74,19 @@
                             </div>
                         </div>
                         <el-row>
+                            <div class="block text-center">
+                                <el-pagination
+                                layout="prev, pager, next"
+                                :total="photos.meta.total"
+                                :page-size="photos.meta.per_page"
+                                :current-page.sync="photos.meta.current_page"
+                                @current-change="handlePhotosPageChange">
+                                </el-pagination>
+                            </div>
+                        </el-row>
+                        <el-row>
                             <div class="center">
-                                <el-col class="cardbody" :span="4" v-for="photo in album.photos" :key="photo">
+                                <el-col class="cardbody" :span="4" v-for="photo in photos.data" :key="photo">
                                     <el-card :body-style="{ padding: '0px' }">
                                     <img v-img:group v-bind:src="photo.image" width="200" height="200" v-bind:alt="photo.caption" class="image">
                                     <div style="padding: 14px;">
@@ -83,14 +94,25 @@
                                         <div class="bottom clearfix">
                                         <time class="time">
                                             <i class="el-icon-time"></i>
-                                            <span style="margin-left: 10px">@{{ photo.created_at }}</span>
+                                            <span style="margin-left: 10px">@{{ photo.created_date }}</span>
                                         </time>
-                                        <el-button class="button" type="primary" icon="el-icon-view"></el-button>
-                                        <el-button class="button pull-right" type="danger" icon="el-icon-delete"></el-button>
+                                        <el-button @click="editPhoto(photo)" class="button" type="primary" icon="el-icon-edit"></el-button>
+                                        <el-button @click="deletePhoto(photo)" class="button pull-right" type="danger" icon="el-icon-delete"></el-button>
                                         </div>
                                     </div>
                                     </el-card>
                                 </el-col>
+                            </div>
+                        </el-row>
+                        <el-row class="box">
+                            <div class="block text-center">
+                                <el-pagination
+                                layout="prev, pager, next"
+                                :total="photos.meta.total"
+                                :page-size="photos.meta.per_page"
+                                :current-page="photos.meta.current_page"
+                                @current-change="handlePhotosPageChange">
+                                </el-pagination>
                             </div>
                         </el-row>
                     </div>
@@ -105,13 +127,15 @@
         el: '#update-album',
         data: {
             album: {},
+            photos: {},
             coverImageBlob: '',
             headerInfo: {
                 'Access-Control-Allow-Origin': '*',
                 'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, DELETE',
                 'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, X-File-Name, X-File-Size, X-File-Type',
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
+            }, 
+            loading: true
         }, 
         created(){
             this.fetchAlbum({!! $id !!});
@@ -123,9 +147,49 @@
                 axios.get(link)
                 .then(function (response) {
                     this.album = response.data.data;
+                    this.fetchPhotosByAlbum(this.album.id);
                 }.bind(this))
                 .catch(function (error) {
                     console.log(error);
+                });
+            },
+            fetchPhotosByAlbum: function(id) {
+                var link = "{!! url('photos/album') !!}/" + id;
+                console.log("firing " + link);
+                this.loading = true;
+                axios.get(link)
+                .then(function (response) {
+                    this.photos = response.data;
+                    this.loading = false;
+                }.bind(this))
+                .catch(function (error) {
+                    console.log(error);
+                });
+            },
+            handlePhotosPageChange: function(val) {
+                var link = "{!! url('photos/album') !!}/" + this.album.id + "?page=" + val;
+                axios.get(link)
+                .then(function (response) {
+                    this.photos = response.data
+                }.bind(this))
+                .catch(function (error) {
+                    this.formerrors = error;
+                });
+            },
+            editPhoto: function(photo) {
+                var link = "{!! url('photos/update') !!}/" + photo.id;
+                document.location.href = link;
+            },
+            deletePhoto: function (photo) {
+                var link = "{!! url('photos/delete') !!}/" + photo.id;
+                console.log("firing " + link);
+                axios.get(link)
+                .then(function (response) {
+                    this.$message.error('Photo deleted from album!');
+                    this.fetchPhotosByAlbum(this.album.id);
+                }.bind(this))
+                .catch(function (error) {
+                    this.formerrors = error;
                 });
             },
             handleAvatarSuccess(res, file) {
@@ -135,13 +199,13 @@
             },
             beforeAvatarUpload(file) {
                 const isJPG = file.type === 'image/jpeg';
-                const isLt2M = file.size / 1024 / 1024 < 2;
+                const isLt2M = file.size / 1024 / 1024 < 20;
         
                 if (!isJPG) {
                     this.$message.error('Avatar picture must be JPG format!');
                 }
                 if (!isLt2M) {
-                    this.$message.error('Avatar picture size can not exceed 2MB!');
+                    this.$message.error('Avatar picture size can not exceed 20MB!');
                 }
                 return isJPG && isLt2M;
             }

@@ -168,6 +168,8 @@ class AlbumController extends Controller
         if ($album) {
             $album->delete();
         }
+
+        flash('Album deleted!')->success();
         return response()->json(['Success, 200']);
     }
 }

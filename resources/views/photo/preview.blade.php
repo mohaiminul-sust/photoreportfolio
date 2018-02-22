@@ -40,7 +40,7 @@
                         <strong><i class="fa fa-book margin-r-5"></i> Tags</strong>
                     </div>
                     <div class="box-body">
-                        <el-tag v-for="tag in photo.tags" :key="tag.id" class="customtag">@{{ tag.tag }}</el-tag>
+                        <el-tag v-for="tag in photo.tags" :key="tag.id">@{{ tag.tag }}</el-tag>
                     </div>
                 </div>
                 <div class="box">

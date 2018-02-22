@@ -44,6 +44,11 @@ class PhotoController extends Controller
         return new PhotoResource($photo);
     }
 
+    public function getPhotosByAlbum($id) {
+        $photos = Photo::where('album_id', $id)->paginate(15);
+        return PhotoResource::collection($photos);
+    }
+
     public function preview($id){
         return view('photo.preview')->with('id', $id);
     }
@@ -53,18 +58,65 @@ class PhotoController extends Controller
     }
 
     public function store(Request $request) {
+
         return $request;
     }
 
     public function edit($id) {
-        return $id;
+        return view('photo.edit')->with('id', $id);
     }
 
     public function update(Request $request, $id) {
-        return $request;
+        $rules = [
+            'caption' => 'required'
+        ];
+
+        $validator = \Validator::make($request->toArray(), $rules);
+        if($validator->fails()){
+            return \Redirect::route('photo.update', $id)
+            ->withErrors($validator)
+            ->withInput();
+        }
+
+        $photo = Photo::find($id);
+
+        if ($photo) {
+            $photo->caption = $request->caption;
+            if ($request->has('notes')) {
+                $photo->notes = $request->notes;
+            }
+            $photo->save();
+        }
+        
+        flash('Photo updated!')->success();
+        return redirect()->route('photo.update', $id);
     }
     
     public function destroy($id) {
-        
+        $photo = Photo::find($id);
+        if ($photo) {
+            $photo->delete();
+        }
+        return response()->json(['Success, 200']);
+    }
+
+    public function updateImage(Request $request, $id) {
+        $photo = Photo::find($id);
+
+        if ($photo) {
+            if($request->hasFile('file'))
+            {
+                $file = $request->file('file');
+
+                $destinationPath = public_path().'/uploads/albums/'.$album.id.'/photos/';
+                $filename = $file->getClientOriginalName();
+                $file->move($destinationPath, $filename);
+
+                $photo->image = url('/').'/uploads/albums/'.$album.id.'/photos/'.$filename;
+                $photo->save();
+            }
+        }
+
+        return new PhotoResource($photo);
     }
 }
