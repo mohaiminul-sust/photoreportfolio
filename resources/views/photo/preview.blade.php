@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <div id="preview-photo" class="container">
+    <div id="preview-photo" class="container" v-cloak>
         <div class="box box-primary">
             <div class="box-header with-border user-block">
                     <img v-img class="img-circle img-bordered-sm" :src="photo.album.cover_image" :alt="photo.album.name">

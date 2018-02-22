@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <div id="upload-photo" class="container">
+    <div id="upload-photo-by-album" class="container">
         @include('flash::message')
         <div class="box box-primary">
             <div class="box-header with-border">
@@ -15,24 +15,6 @@
             <!-- form start -->
             <div class="box-body">
                 <div class="box">
-                    <div class="box-header">
-                        <h3 class="box-title center">Choose Album</h3>
-                    </div>
-                    <div class="box-body">
-                        <el-select v-model="value" placeholder="Select">
-                        <el-option
-                            v-for="item in albumlist"
-                            :key="item"
-                            :label="item.name"
-                            :value="item.id">
-                        </el-option>
-                        </el-select>
-                    </div>
-                </div>
-                <div class="box">
-                    <div class="box-header">
-                        <h3 class="box-title center">Upload Image</h3>
-                    </div>
                     <div class="box-body">
                         <div class="image-container">
                             <el-upload
@@ -42,7 +24,7 @@
                             :show-file-list="false"
                             :on-success="handleAvatarSuccess"
                             :before-upload="beforeAvatarUpload">
-                            <img v-if="imageBlob" :src="imageBlob" class="avatar" width=800 height=600>
+                            <img v-if="imageBlob" :src="imageBlob" class="avatar" id="photo" ref="photo" width=800 height=600>
                             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                             </el-upload>
                         </div>
@@ -55,7 +37,7 @@
 
 @section('script')
     var updatephoto = new Vue({
-        el: '#upload-photo',
+        el: '#upload-photo-by-album',
         data: {
             imageBlob: '',
             headerInfo: {
@@ -63,15 +45,15 @@
                 'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, DELETE',
                 'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, X-File-Name, X-File-Size, X-File-Type',
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }, 
-            albumlist: [],
-            value: '',
+            },
+            albumId: {!! $id !!},
             loading: false,
-            photo: {}
+            photo: {},
+            exif: {}
         },
         computed: {
             uploadUrl: function() {
-                return "{!! url('photos/create') !!}/" + this.value;
+                return "{!! url('photos/create') !!}/" + this.albumId;
             } 
         },
         created() {
@@ -91,15 +73,10 @@
                 });
             },
             handleAvatarSuccess(res, file) {
-                this.coverImageBlob = URL.createObjectURL(file.raw);
+                this.imageBlob = URL.createObjectURL(file.raw);
                 this.$message.success('Image uploaded!');
-                this.photo = res.data.data;
-                EXIF.getData(file, function() {
-                    var allMetaData = EXIF.getAllTags(this);
-                    console.log('METAS');
-                    console.log(allMetaData);
-                });
-                var link = "{!! url('photos/update') !!}/" + res.data.id;
+                this.photo = res.data;
+                var link = "{!! url('photos/update') !!}/" + this.photo.id;
                 document.location.href = link;
             },
             beforeAvatarUpload(file) {
@@ -111,9 +88,6 @@
                 }
                 if (!isLt2M) {
                     this.$message.error('Photo size can not exceed 20MB!');
-                }
-                if(this.value.length === 0) {
-                    this.$message.warning('Choose album to upload photo first');
                 }
                 return isJPG && isLt2M;
             }

@@ -45,7 +45,8 @@ Route::group(['prefix' => 'photos'], function() {
     Route::get('/', 'PhotoController@index')->name('photo.index');
     Route::get('/all', 'PhotoController@getPhotos')->name('photo.all');
     Route::get('/{id}', 'PhotoController@show')->name('photo.show');
-    Route::get('/upload/image/new', 'PhotoController@uploadimage')->name('photo.uploadimage');
+    Route::get('/upload/image/new', 'PhotoController@uploadImage')->name('photo.uploadimage');
+    Route::get('/upload/image/album/{id}', 'PhotoController@uploadImageByAlbum')->name('photo.uploadimagebyalbum');
     Route::post('/create/{id}', 'PhotoController@store')->name('photo.store');
     Route::get('/update/{id}', 'PhotoController@edit')->name('photo.edit');
     Route::post('/update/{id}', 'PhotoController@update')->name('photo.update');

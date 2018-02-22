@@ -3,8 +3,8 @@
 @section('content')
 <div class="container">
     @include('flash::message')
-    <div id="photo-time" v-cloak>
-        <div v-loading="loading" class="box">
+    <div id="photo-time">
+        <div class="box">
             <div class="box-header">
                 <el-header>
                     <div>
@@ -87,6 +87,9 @@
                 document.location.href = link;
             },
             trimmedText: function(text, chars) {
+                if(text == null) {
+                    return;
+                }
                 return text.length > chars ? text.substring(0, chars) + '...' : text;
             }
         }

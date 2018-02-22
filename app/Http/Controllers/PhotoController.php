@@ -53,6 +53,10 @@ class PhotoController extends Controller
         return view('photo.upload');
     }
 
+    public function uploadImageByAlbum($id) {
+        return view('photo.uploadbyalbum')->with('id', $id);    
+    }
+
     public function store(Request $request, $id) {
         if($request->hasFile('file'))
         {
@@ -67,7 +71,6 @@ class PhotoController extends Controller
             $photo->save();
 
             return new PhotoResource($photo);
-            // return response()->json(['Success, 200']);
         }
     }
 
