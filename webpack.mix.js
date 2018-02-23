@@ -18,3 +18,4 @@ mix.styles(['resources/assets/css/customcard.css'], 'public/css/customcard.css')
 mix.styles(['resources/assets/css/createalbumform.css'], 'public/css/createalbumform.css');
 mix.styles(['resources/assets/css/formtags.css'], 'public/css/formtags.css');
 mix.styles(['resources/assets/css/cloak.css'], 'public/css/cloak.css');
+mix.styles(['resources/assets/css/customaddins.css'], 'public/css/customaddins.css');

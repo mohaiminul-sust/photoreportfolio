@@ -10,6 +10,7 @@
         <div class="box box-primary">
             <div class="box-header with-border">
               <h3 class="box-title center">Upload Photo</h3>
+              <span class="post">in album <button @click="showAlbum" class="btn-sm btn-primary">@{{ album.name }}</button></span>
             </div>
             <!-- /.box-header -->
             <!-- form start -->
@@ -25,7 +26,7 @@
                             :on-success="handleAvatarSuccess"
                             :before-upload="beforeAvatarUpload">
                             <img v-if="imageBlob" :src="imageBlob" class="avatar" id="photo" ref="photo" width=800 height=600>
-                            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                            <i v-else class="el-icon-plus avatar-uploader-icon-photo"></i>
                             </el-upload>
                         </div>
                     </div>
@@ -47,9 +48,9 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             albumId: {!! $id !!},
+            album: {},
             loading: false,
-            photo: {},
-            exif: {}
+            photo: {}
         },
         computed: {
             uploadUrl: function() {
@@ -57,20 +58,24 @@
             } 
         },
         created() {
-            this.fetchAlbums();
+            this.fetchAlbum(this.albumId);
         },
         methods: {
-            fetchAlbums: function() {
-                var link = "{!! url('albums/list') !!}";
+            fetchAlbum: function(id) {
+                var link = "{!! url('albums') !!}/" + id;
                 this.loading = true;
                 axios.get(link)
                 .then(function (response) {
-                    this.albumlist = response.data.data;
+                    this.album = response.data.data;
                     this.loading = false;
                 }.bind(this))
                 .catch(function (error) {
                     this.formerrors = error;
                 });
+            },
+            showAlbum: function() {
+                var link = "{!! url('albums/preview') !!}/" + this.album.id;
+                document.location.href = link;
             },
             handleAvatarSuccess(res, file) {
                 this.imageBlob = URL.createObjectURL(file.raw);

@@ -93,13 +93,8 @@
             handleAvatarSuccess(res, file) {
                 this.coverImageBlob = URL.createObjectURL(file.raw);
                 this.$message.success('Image uploaded!');
-                this.photo = res.data.data;
-                EXIF.getData(file, function() {
-                    var allMetaData = EXIF.getAllTags(this);
-                    console.log('METAS');
-                    console.log(allMetaData);
-                });
-                var link = "{!! url('photos/update') !!}/" + res.data.id;
+                this.photo = res.data;
+                var link = "{!! url('photos/update') !!}/" + this.photo.id;
                 document.location.href = link;
             },
             beforeAvatarUpload(file) {

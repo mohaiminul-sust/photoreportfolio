@@ -59,4 +59,3 @@ Route::group(['prefix' => 'photos'], function() {
         Route::get('/delete/{id}', 'TagController@destroy')->name('photo.tag.delete');
     });
 });
-

@@ -36,7 +36,9 @@
                     <div class="center">
                         <el-col class="cardbody" :span="4" v-for="photo in photos.data" :key="photo">
                             <el-card :body-style="{ padding: '0px' }">
-                            <img v-img:group v-bind:src="photo.image" width="200" height="200" v-bind:alt="photo.caption" class="image">
+                            <div class="parent-card">
+                                <img v-img:group v-bind:src="photo.image" v-bind:alt="photo.caption" class="image-aspect">
+                            </div>
                             <div style="padding: 14px;">
                                 <span>@{{ trimmedText(photo.caption, 17) }}</span>
                                 <div class="bottom clearfix">
@@ -46,7 +48,7 @@
                                 </time>
                                 <time class="time">
                                     <i class="el-icon-menu"></i>
-                                    <span style="margin-left: 10px">@{{ trimmedText(photo.album.name, 17) }}</span>
+                                    <span style="margin-left: 10px">@{{ trimmedText(photo.album.name, 13) }}</span>
                                 </time>
                                 <hr>
                                 <el-button v-on:click="editPhoto(photo)" class="button pull-right" type="danger" icon="el-icon-edit"></el-button>
@@ -120,7 +122,7 @@
             },
             trimmedText: function(text, chars) {
                 if(text == null) {
-                    return;
+                    return "";
                 }
                 return text.length > chars ? text.substring(0, chars) + '...' : text;
             }

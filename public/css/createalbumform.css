@@ -21,15 +21,22 @@
     height: auto;
     display: block;
 }
-.avatar-upload-photo {
+.avatar-uploader-icon-photo {
     width: 800px;
     height: 600px;
-    display: block;
+    font-size: 28px;
+    color: #8c939d;
+    line-height: 600px;
+    text-align: center;
 }
-.avatar-upload-cover {
+.avatar-uploader-icon-cover {
     width: 200px;
     height: 200px;
     display: block;
+    font-size: 28px;
+    color: #8c939d;
+    line-height: 200px;
+    text-align: center;
 }
 .avatar-uploader input {
     display: none;

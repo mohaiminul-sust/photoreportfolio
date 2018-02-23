@@ -13,6 +13,8 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/cloak.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/customaddins.css') }}" rel="stylesheet">
+
     @yield('style')
 </head>
 <body>

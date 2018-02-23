@@ -42,7 +42,9 @@
                     <div class="center">
                         <el-col class="cardbody" :span="4" v-for="album in albums.data" :key="album">
                             <el-card :body-style="{ padding: '0px' }">
-                            <img v-bind:src="album.cover_image" width="200" height="200" v-bind:alt="album.name" class="image">
+                            <div class="parent-card">
+                                <img v-bind:src="album.cover_image" v-bind:alt="album.name" class="image-aspect">
+                            </div>
                             <div style="padding: 14px;">
                                 <span>@{{ trimmedText(album.name, 17) }}</span>
                                 <div class="bottom clearfix">
@@ -122,7 +124,7 @@
             },
             trimmedText: function(text, chars) {
                 if(text == null) {
-                    return;
+                    return "";
                 }
                 return text.length > chars ? text.substring(0, chars) + '...' : text;
             }

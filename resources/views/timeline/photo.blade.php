@@ -3,8 +3,8 @@
 @section('content')
 <div class="container">
     @include('flash::message')
-    <div id="photo-time">
-        <div class="box">
+    <div id="photo-time" v-cloak>
+        <div class="box" v-loading="loading">
             <div class="box-header">
                 <el-header>
                     <div>
@@ -46,7 +46,7 @@
                                 </div>
                             </div>
                             <div class="timeline-footer">
-                                
+                                <a class="btn btn-primary btn-xs">...</a>
                             </div>
                         </div>
                     </li>
@@ -64,7 +64,7 @@
         data: {
             photosGrouped: {},
             formerrors: {},
-            loading: true
+            loading: false
         },
         created(){
             this.fetchPhotos();
@@ -88,7 +88,7 @@
             },
             trimmedText: function(text, chars) {
                 if(text == null) {
-                    return;
+                    return "";
                 }
                 return text.length > chars ? text.substring(0, chars) + '...' : text;
             }

@@ -83,7 +83,7 @@ class AlbumController extends Controller
         $album->save();
         flash('Album created!')->success();
 
-        return redirect()->route('album.index');
+        return redirect()->route('album.update', $album->id);
     }
 
     /**
@@ -152,11 +152,11 @@ class AlbumController extends Controller
             {
                 $file = $request->file('file');
 
-                $destinationPath = public_path().'/uploads/albums/'.$album.id.'/cover/';
+                $destinationPath = public_path().'/uploads/albums/'.$album->id.'/cover/';
                 $filename = $file->getClientOriginalName();
                 $file->move($destinationPath, $filename);
 
-                $album->cover_image = url('/').'/uploads/albums/'.$album.id.'/cover/'.$filename;
+                $album->cover_image = url('/').'/uploads/albums/'.$album->id.'/cover/'.$filename;
                 $album->save();
             }
         }

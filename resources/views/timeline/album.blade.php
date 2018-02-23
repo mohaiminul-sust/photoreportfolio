@@ -46,7 +46,7 @@
                                 </div>
                             </div>
                             <div class="timeline-footer">
-                                
+                                <a class="btn btn-primary btn-xs">...</a>
                             </div>
                         </div>
                     </li>

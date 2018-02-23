@@ -23,6 +23,7 @@
         <div class="box box-primary">
             <div class="box-header with-border">
               <h3 class="box-title center">Update Photo</h3>
+              <span class="post">Photo : from album <button @click="showAlbum" class="btn-sm btn-primary">@{{ photo.album.name }}</button></span>
             </div>
             <!-- /.box-header -->
             <!-- form start -->
@@ -173,6 +174,10 @@
                 }
                 this.tagInputVisible = false;
                 this.tagInputValue = '';
+            },
+            showAlbum: function() {
+                var link = "{!! url('albums/preview') !!}/" + this.photo.album.id;
+                document.location.href = link;
             }
         }
     })

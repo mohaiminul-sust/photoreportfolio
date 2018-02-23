@@ -60,7 +60,8 @@
     var previewphoto = new Vue({
         el: '#preview-photo',
         data: {
-            photo: {}
+            photo: {},
+            exif: {}
         }, 
         created() {
             this.fetchPhoto({!! $id !!});

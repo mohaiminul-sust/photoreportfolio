@@ -57,7 +57,9 @@
                                 <div class="center">
                                     <el-col class="cardbody" :span="4" v-for="photo in photos.data" :key="photo">
                                         <el-card :body-style="{ padding: '0px' }">
-                                        <img v-img:group v-bind:src="photo.image" width="200" height="200" v-bind:alt="photo.caption" class="image">
+                                        <div class="parent-card">
+                                            <img v-img:group v-bind:src="photo.image" v-bind:alt="photo.caption" class="image-aspect">
+                                        </div>    
                                         <div style="padding: 14px;">
                                             <span>@{{ trimmedText(photo.caption, 17) }}</span>
                                             <div class="bottom clearfix">
@@ -84,6 +86,28 @@
                                     </el-pagination>
                                 </div>
                             </el-row>
+                        </div>
+                    </div>
+                </div>
+                <div v-else>
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <div>
+                                <h3 class="box-title center">Album Photos</h3>
+                                <span class="description" style="margin-left: 20px">(0 photos)</span>  
+                            </div>
+                            <div class="pull-right">
+                                <a href="{{ route('photo.uploadimagebyalbum', $id) }}" class="pull-right">
+                                    <el-button type="success" icon="el-icon-plus"></el-button>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="box-body text-center">
+                            <span class="description">
+                                No Photos in album
+                                </br>
+                                Upload to manage photos here
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -167,7 +191,7 @@
             },
             trimmedText: function(text, chars) {
                 if(text == null) {
-                    return;
+                    return "";
                 }
                 return text.length > chars ? text.substring(0, chars) + '...' : text;
             }

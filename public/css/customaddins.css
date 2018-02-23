@@ -1,0 +1,14 @@
+.parent-photo {
+    width: 800px;
+}
+.parent-card {
+    width: 200px;
+}
+.parent-cover {
+    width: 200px;
+}
+.image-aspect {
+    display: block;
+    width: 100%;
+    height: auto;
+}
