@@ -43,7 +43,7 @@
                             :on-success="handleAvatarSuccess"
                             :before-upload="beforeAvatarUpload">
                             <img v-if="imageBlob" :src="imageBlob" class="avatar" width=800 height=600>
-                            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                            <i v-else class="el-icon-plus avatar-uploader-icon-photo"></i>
                             </el-upload>
                         </div>
                     </div>

@@ -36,14 +36,14 @@ class AlbumController extends Controller
      */
     public function getAlbums()
     {   
-        $albums = Album::paginate(20);
+        $albums = Album::orderBy('created_at','desc')->paginate(20);
         // return $albums;
         return AlbumResource::collection($albums);
     }
 
     public function listAlbums() {
         
-        $albums = Album::all();
+        $albums = Album::orderBy('created_at','desc')->get();
         // return $albums;
         return AlbumListResource::collection($albums);
     }

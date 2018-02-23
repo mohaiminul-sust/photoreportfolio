@@ -29,7 +29,7 @@ class PhotoController extends Controller
      */
     public function getPhotos()
     {
-        $photos = Photo::paginate(50);
+        $photos = Photo::orderBy('created_at','desc')->paginate(25);
         return PhotoResource::collection($photos);
     }
 
@@ -45,7 +45,7 @@ class PhotoController extends Controller
     }
 
     public function getPhotosByAlbum($id) {
-        $photos = Photo::where('album_id', $id)->paginate(15);
+        $photos = Photo::where('album_id', $id)->orderBy('created_at','desc')->paginate(15);
         return PhotoResource::collection($photos);
     }
 
