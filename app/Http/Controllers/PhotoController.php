@@ -33,6 +33,10 @@ class PhotoController extends Controller
         return PhotoResource::collection($photos);
     }
 
+    public function search($query) {
+        $photos = Photo::search($query)->get();
+        return PhotoResource::collection($photos);
+    }
     /**
      * Display the specified collection.
      *

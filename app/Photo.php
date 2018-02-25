@@ -2,13 +2,16 @@
 
 namespace App;
 
+use Sofa\Eloquence\Eloquence;
 use Illuminate\Database\Eloquent\Model;
 
 class Photo extends Model
 {
+    use Eloquence;
     protected $table = 'photos';
   
-    protected $fillable = ['album_id', 'caption', 'notes', 'image'];
+    protected $guarded = [];
+    protected $searchableColumns = ['caption', 'notes', 'album.name', 'tags.tag'];
 
     public function album()
     {

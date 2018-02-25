@@ -1,7 +1,7 @@
 {
     "name": "laravel/laravel",
     "description": "Photo manager & portfolio SAAS project",
-    "keywords": ["framework", "laravel", "photo", "manager", "portfolio", "saas"],
+    "keywords": ["framework", "laravel", "photo", "manager", "portfolio", "saas", "repo", "repository"],
     "license": "MIT",
     "type": "project",
     "require": {
@@ -14,7 +14,8 @@
         "laravel/framework": "5.5.*",
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^5.2.0",
-        "laravolt/avatar": "^2.0"
+        "laravolt/avatar": "^2.0",
+        "sofa/eloquence": "^5.5"
     },
     "require-dev": {
         "filp/whoops": "~2.0",

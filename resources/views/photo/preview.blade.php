@@ -8,14 +8,14 @@
     <div id="preview-photo" class="container" v-cloak>
         <div class="box box-primary">
             <div class="box-header with-border user-block">
-                    <img v-img class="img-circle img-bordered-sm" :src="photo.album.cover_image" :alt="photo.album.name">
-                    <span class="username">Photo : from album <button @click="showAlbum" class="btn-sm btn-primary">@{{ photo.album.name }}</button></span>
-                    <span class="description">Created @{{ photo.created_ago }} at @{{ photo.created_date }}</span>
-                    <span class="description">Updated at @{{ photo.updated_date }}</span>
-                    <div class="pull-right">
-                        <el-button @click="deletePhoto" type="danger" icon="el-icon-delete"></el-button>
-                        <el-button @click="editPhoto" class="pull-right" type="success" icon="el-icon-edit"></el-button>
-                    </div>
+                <img v-img class="img-circle img-bordered-sm" :src="photo.album.cover_image" :alt="photo.album.name">
+                <span class="username">Photo : from album <button @click="showAlbum" class="btn-sm btn-primary">@{{ photo.album.name }}</button></span>
+                <span class="description">Created @{{ photo.created_ago }} at @{{ photo.created_date }}</span>
+                <span class="description">Updated at @{{ photo.updated_date }}</span>
+                <div class="pull-right">
+                    <el-button @click="deletePhoto" type="danger" icon="el-icon-delete"></el-button>
+                    <el-button @click="editPhoto" class="pull-right" type="success" icon="el-icon-edit"></el-button>
+                </div>
             </div>
             <!-- /.box-header -->
             <div class="box-body">

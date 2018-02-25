@@ -47,6 +47,11 @@ class AlbumController extends Controller
         // return $albums;
         return AlbumListResource::collection($albums);
     }
+
+    public function search($query) {
+        $albums = Album::search($query)->get();
+        return AlbumResource::collection($albums);
+    }
     /**
      * Show the form for creating a new resource.
      *
