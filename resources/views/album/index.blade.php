@@ -12,18 +12,33 @@
             <div v-loading="loading" class="box">
                 <div class="box-header">
                 <el-header>
-                    <div>
-                        <a href="{{ route('album.index') }}">
-                            <h3 class="box-title center">Albums</h3>
-                        </a>
-                        <span class="description" style="margin-left: 20px">@{{ albums.meta.from }} - @{{ albums.meta.to }} of @{{ albums.meta.total }} albums</span>        
-                    </div>
-                    
-                    <div class="pull-right">
-                        <a href="{{ route('album.create') }}" class="pull-right">
-                            <el-button type="success" icon="el-icon-plus"></el-button>
-                        </a>
-                    </div>
+                    <el-row>
+                        <el-col :span=18>
+                            <div>
+                                <a href="{{ route('album.index') }}">
+                                    <h3 class="box-title center">Albums</h3>
+                                </a>
+                                <span class="description" style="margin-left: 20px">@{{ albums.meta.from }} - @{{ albums.meta.to }} of @{{ albums.meta.total }} albums</span>        
+                            </div>
+                        </el-col>
+                    </el-row>
+                    <el-row>
+                        <el-col :span=4>
+                            <el-input
+                                placeholder="Search Album"
+                                v-model="searchString"
+                                v-on:keyup.enter.native="searchAlbums">
+                                <i slot="prefix" class="el-input__icon el-icon-search"></i>
+                            </el-input>
+                        </el-col>  
+                        <el-col :span=4 class="pull-right">
+                            <div>
+                                <a href="{{ route('album.create') }}" class="pull-right">
+                                    <el-button type="success" icon="el-icon-plus"></el-button>
+                                </a>
+                            </div>
+                        </el-col>
+                    </el-row>
                 </el-header>
                 </div>
                 <!-- /.box-header -->
@@ -83,10 +98,12 @@
     var album = new Vue({
         el: '#album',
         data: {
+            searchString: '',
             albums: [],
             formerrors: {},
             presentingEditModal: false,
-            loading: true
+            loading: false,
+            hasSearched: false
         }, 
         created(){
             this.fetchAlbums();
@@ -102,7 +119,28 @@
                 }.bind(this))
                 .catch(function (error) {
                     this.formerrors = error;
+                    this.loading = false;
                 });
+            },
+            searchAlbums: function() {
+                let query = this.searchString;
+                if (query.length <= 0) {
+                    this.$message.warning('Enter something in search box to search');  
+                    return;
+                }
+                var link = "{!! url('albums/search') !!}/?query=" + query;
+                console.log("Firing : " + link);
+                this.loading = true;
+                axios.get(link)
+                .then(function (response) {
+                    this.albums = response.data;
+                    this.loading = false;
+                    this.hasSearched = true;
+                }.bind(this))
+                .catch(function (error) {
+                    this.formerrors = error;
+                    this.loading = false;
+                }); 
             },
             editAlbum: function (album) {
                 var link = "{!! url('albums/update') !!}/" + album.id;
@@ -110,9 +148,15 @@
             },
             handleCurrentPageChange: function(val) {
                 var link = "{!! url('albums/all') !!}?page=" + val;
+                if (this.hasSearched == true) {
+                    if (this.searchString.length > 0) {
+                        link = "{!! url('albums/search') !!}?query=" + this.searchString + "&page=" + val;
+                    }
+                }
+                console.log("Firing pager : " + link);
                 axios.get(link)
                 .then(function (response) {
-                    this.albums = response.data
+                    this.albums = response.data;
                 }.bind(this))
                 .catch(function (error) {
                     this.formerrors = error;

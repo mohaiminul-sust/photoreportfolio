@@ -42,14 +42,14 @@ class AlbumController extends Controller
     }
 
     public function listAlbums() {
-        
         $albums = Album::orderBy('created_at','desc')->get();
-        // return $albums;
         return AlbumListResource::collection($albums);
     }
 
-    public function search($query) {
-        $albums = Album::search($query)->get();
+    public function searchAlbums(Request $request) {
+        $query = strtolower($request->input('query'));
+        $albums = Album::SearchByKeyword($query)->orderBy('created_at','desc')->paginate(20);
+
         return AlbumResource::collection($albums);
     }
     /**

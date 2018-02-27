@@ -33,8 +33,9 @@ class PhotoController extends Controller
         return PhotoResource::collection($photos);
     }
 
-    public function search($query) {
-        $photos = Photo::search($query)->get();
+    public function searchPhotos(Request $request) {
+        $query = strtolower($request->input('query'));
+        $photos = Photo::SearchByKeyword($query)->orderBy('created_at','desc')->paginate(25);
         return PhotoResource::collection($photos);
     }
     /**

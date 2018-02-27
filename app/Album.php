@@ -2,19 +2,25 @@
 
 namespace App;
 
-use Sofa\Eloquence\Eloquence;
 use Illuminate\Database\Eloquent\Model;
 
 class Album extends Model
 {
-    use Eloquence;
-
     protected $table = 'albums';
 
     protected $guarded = [];
-    protected $searchableColumns = ['name', 'description'];
-
+    
     public function photos(){
         return $this->hasMany('App\Photo');
+    }
+
+    public function scopeSearchByKeyword($query, $keyword)
+    {
+        if ($keyword != '') {
+            $query->where(function ($query) use ($keyword) {
+                $query->where("name", "LIKE","%$keyword%");
+            });
+        }
+        return $query;
     }
 }
