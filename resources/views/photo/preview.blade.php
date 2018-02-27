@@ -6,12 +6,6 @@
 
 @section('content')
     <div id="preview-photo" class="container" v-cloak>
-        <sweet-modal ref="imageinfo" title="Image Info">
-            <sweet-modal-tab title="Tab 1" id="tab1">Contents of Tab 1</sweet-modal-tab>
-            <sweet-modal-tab title="Tab 2" id="tab2">Contents of Tab 2</sweet-modal-tab>
-            <sweet-modal-tab title="Tab 3" id="tab3" disabled>Tab 3 is disabled</sweet-modal-tab>
-        </sweet-modal>
-                
         <div class="box box-primary">
             <div class="box-header with-border user-block">
                 <img v-img class="img-circle img-bordered-sm" :src="photo.album.cover_image" :alt="photo.album.name">
@@ -28,7 +22,7 @@
                 <div class="box">
                     <div class="box-header">
                         <strong><i class="fa fa-book margin-r-5"></i> Photo</strong>
-                        <button type="button" class="btn-sm btn-primary pull-right"><i class="fa fa-align-left"></i> Info</button>
+                        <button @click="openImageInfo" type="button" class="btn-sm btn-primary pull-right"><i class="fa fa-align-left"></i> Info</button>
                     </div>
                     <div class="box-body">
                         <img v-img class="image-aspect" :src="photo.image" :alt="photo.caption" id="photoimg" ref="photoimg">
@@ -60,6 +54,44 @@
                 </div>
             </div>
         </div>
+        <sweet-modal ref="imageinfo">
+            <sweet-modal-tab title="Camera" id="cameraTab">
+                <div class="box">
+                    <div class="box-body">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th>Parameters</th>
+                                    <th>Value</th>
+                                </tr>
+                                <tr v-for="(value, key) in cameraData">
+                                    <td>@{{ toCapitalizedWords(key) }}</td>
+                                    <td>@{{ value }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </sweet-modal-tab>
+            <sweet-modal-tab title="Image" id="imageTab">
+                <div class="box">
+                    <div class="box-body">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th>Parameters</th>
+                                    <th>Value</th>
+                                </tr>
+                                <tr v-for="(value, key) in imageData">
+                                    <td>@{{ toCapitalizedWords(key) }}</td>
+                                    <td>@{{ value }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </sweet-modal-tab>
+        </sweet-modal>
     </div>
 @endsection
 
@@ -135,6 +167,13 @@
             },
             openImageInfo: function() {
                 this.$refs.imageinfo.open();
+            },
+            toCapitalizedWords: function(name) {
+                var words = name.match(/[A-Za-z][a-z]*/g);
+                return words.map(this.capitalize).join(" ");
+            },
+            capitalize: function(word) {
+                return word.charAt(0).toUpperCase() + word.substring(1);
             }
         }
     })
