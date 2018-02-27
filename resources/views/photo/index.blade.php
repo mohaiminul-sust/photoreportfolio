@@ -12,12 +12,24 @@
             <div class="box">
                 <div class="box-header">
                 <el-header>
-                    <div>
-                        <a href="{{ route('photo.index') }}">
-                            <h3 class="box-title center">Photos</h3>
-                        </a>
-                        <span class="description" style="margin-left: 20px">@{{ photos.meta.from }} - @{{ photos.meta.to }} of @{{ photos.meta.total }} photos</span>        
-                    </div>
+                    <el-row>
+                        <el-col :span=18>
+                            <div>
+                                <a href="{{ route('photo.index') }}">
+                                    <h3 class="box-title center">Photos</h3>
+                                </a>
+                                <span class="description" style="margin-left: 20px">@{{ photos.meta.from }} - @{{ photos.meta.to }} of @{{ photos.meta.total }} photos</span>        
+                            </div>
+                        </el-col>
+                        <el-col :span=4.5>
+                            <el-input
+                                placeholder="Search Photos"
+                                v-model="searchString"
+                                v-on:keyup.enter.native="searchPhotos">
+                                <i slot="prefix" class="el-input__icon el-icon-search"></i>
+                            </el-input>
+                        </el-col>  
+                    </el-row>
                 </el-header>
                 </div>
                 <!-- /.box-header -->
@@ -82,9 +94,11 @@
     var photos = new Vue({
         el: '#photos',
         data: {
+            searchString: '',
             photos: [],
             formerrors: {},
-            loading: true
+            loading: false,
+            hasSearched: false
         }, 
         created(){
             this.fetchPhotos();
@@ -102,12 +116,39 @@
                     this.formerrors = error;
                 });
             },
+            searchPhotos: function() {
+                let query = this.searchString;
+                if (query.length <= 0) {
+                    this.$message.warning('Enter something in search box to search');  
+                    return;
+                }
+                var link = "{!! url('photos/search') !!}/?query=" + query;
+                console.log("Firing : " + link);
+                this.loading = true;
+                axios.get(link)
+                .then(function (response) {
+                    this.photos = response.data;
+                    this.loading = false;
+                    this.hasSearched = true;
+                }.bind(this))
+                .catch(function (error) {
+                    this.formerrors = error;
+                    this.loading = false;
+                }); 
+            },
             editPhoto: function (photo) {
                 var link = "{!! url('photos/update') !!}/" + photo.id;
                 document.location.href = link;
             },
             handleCurrentPageChange: function(val) {
                 var link = "{!! url('photos/all') !!}?page=" + val;
+                let query = this.searchString;
+                if (this.hasSearched == true) {
+                    if (query.length > 0) {
+                        link = "{!! url('photos/search') !!}?query=" + query + "&page=" + val;
+                    }
+                }
+                console.log("Firing pager : " + link);
                 axios.get(link)
                 .then(function (response) {
                     this.photos = response.data

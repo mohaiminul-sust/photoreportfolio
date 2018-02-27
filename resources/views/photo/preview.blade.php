@@ -24,7 +24,7 @@
                         <strong><i class="fa fa-book margin-r-5"></i> Photo</strong>
                     </div>
                     <div class="box-body">
-                        <img v-img class="image-responsive" width=800 height=600 :src="photo.image" :alt="photo.caption" id="photoimg" ref="photoimg">
+                        <img v-img class="image-aspect" :src="photo.image" :alt="photo.caption" id="photoimg" ref="photoimg">
                     </div>
                 </div>
                 <div class="box">

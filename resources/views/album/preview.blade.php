@@ -24,7 +24,7 @@
                         <strong><i class="fa fa-book margin-r-5"></i> Cover Image</strong>
                     </div>
                     <div class="box-body">
-                        <img class="image-responsive" width=200 height=200 :src="album.cover_image" :alt="album.name">
+                        <img v-img class="image-responsive" width=200 height=200 :src="album.cover_image" :alt="album.name">
                     </div>
                 </div>
                 <div class="box">
