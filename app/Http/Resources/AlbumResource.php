@@ -19,7 +19,7 @@ class AlbumResource extends Resource
             'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
-            'cover_image' => $this->cover_image,
+            'cover_image' => url('/').$this->cover_image,
             'photos' => $this->photos,
             'created_date' => Carbon::parse($this->created_at)->toDateTimeString(),
             'updated_date' => Carbon::parse($this->updated_at)->toDateTimeString(),

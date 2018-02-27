@@ -58,7 +58,7 @@
                         <div v-if="album.cover_image" class="parent-cover">
                             <img :src="album.cover_image" class="avatar">
                         </div>
-                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                        <i v-else class="el-icon-plus avatar-uploader-icon-cover"></i>
                         </el-upload>
                         <div class="image-centered-text">Click to upload</div>
                     </div>

@@ -33,7 +33,7 @@
                 </el-header>
                 </div>
                 <!-- /.box-header -->
-                <div v-if="this.photos.count > 0" class="box-body">
+                <div v-if="this.photos.data.length > 0">
                     <el-row>
                         <div class="block text-center">
                             <el-pagination
@@ -50,7 +50,7 @@
                             <el-col class="cardbody" :span="4" v-for="photo in photos.data" :key="photo">
                                 <el-card :body-style="{ padding: '0px' }">
                                 <div class="parent-card">
-                                    <img v-img:group v-bind:src="photo.image" v-bind:alt="photo.caption" class="image-aspect">
+                                    <img v-img:group v-bind:src="photo.image" v-bind:alt="photo.caption" class="image" width=200 height=150>
                                 </div>
                                 <div style="padding: 14px;">
                                     <span>@{{ trimmedText(photo.caption, 17) }}</span>

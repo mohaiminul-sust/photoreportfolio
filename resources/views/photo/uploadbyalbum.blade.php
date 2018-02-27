@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <div id="upload-photo-by-album" class="container">
+    <div id="upload-photo-by-album" class="container" v-cloak>
         @include('flash::message')
         <div class="box box-primary">
             <div class="box-header with-border">

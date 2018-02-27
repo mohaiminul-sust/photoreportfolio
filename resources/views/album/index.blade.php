@@ -33,7 +33,7 @@
                 </el-header>
                 </div>
                 <!-- /.box-header -->
-                <div v-if="this.albums.count > 0" class="box-body">
+                <div v-if="albums.data.length > 0">
                     <el-row>
                         <div class="block text-center">
                             <el-pagination
@@ -50,7 +50,7 @@
                             <el-col class="cardbody" :span="4" v-for="album in albums.data" :key="album">
                                 <el-card :body-style="{ padding: '0px' }">
                                 <div class="parent-card">
-                                    <img v-img v-bind:src="album.cover_image" v-bind:alt="album.name" class="image-aspect">
+                                    <img v-img v-bind:src="album.cover_image" v-bind:alt="album.name" width=200 height=200 class="image">
                                 </div>
                                 <div style="padding: 14px;">
                                     <span>@{{ trimmedText(album.name, 17) }}</span>
@@ -100,7 +100,7 @@
             presentingEditModal: false,
             loading: false,
             hasSearched: false
-        }, 
+        },
         created(){
             this.fetchAlbums();
         },

@@ -161,7 +161,7 @@ class AlbumController extends Controller
                 $filename = $file->getClientOriginalName();
                 $file->move($destinationPath, $filename);
 
-                $album->cover_image = url('/').'/uploads/albums/'.$album->id.'/cover/'.$filename;
+                $album->cover_image = '/uploads/albums/'.$album->id.'/cover/'.$filename;
                 $album->save();
             }
         }

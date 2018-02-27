@@ -22,6 +22,7 @@
                 <div class="box">
                     <div class="box-header">
                         <strong><i class="fa fa-book margin-r-5"></i> Photo</strong>
+                        <button type="button" class="btn-sm btn-primary pull-right"><i class="fa fa-align-left"></i> Info</button>
                     </div>
                     <div class="box-body">
                         <img v-img class="image-aspect" :src="photo.image" :alt="photo.caption" id="photoimg" ref="photoimg">

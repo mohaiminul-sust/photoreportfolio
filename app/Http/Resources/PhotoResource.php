@@ -22,6 +22,7 @@ class PhotoResource extends Resource
             'notes' => $this->notes,
             'album' => $this->album,
             'tags' => $this->tags,
+            'exif' => \Image::make(public_path().$this->image)->exif(),
             'created_date' => Carbon::parse($this->created_at)->toDateTimeString(),
             'updated_date' => Carbon::parse($this->updated_at)->toDateTimeString(),
             'created_ago' => Carbon::parse($this->created_at)->diffForHumans(Carbon::now()),
