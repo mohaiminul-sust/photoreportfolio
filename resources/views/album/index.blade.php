@@ -33,50 +33,55 @@
                 </el-header>
                 </div>
                 <!-- /.box-header -->
-                <el-row>
-                    <div class="block text-center">
-                        <el-pagination
-                        layout="prev, pager, next"
-                        :total="albums.meta.total"
-                        :page-size="albums.meta.per_page"
-                        :current-page.sync="albums.meta.current_page"
-                        @current-change="handleCurrentPageChange">
-                        </el-pagination>
-                    </div>
-                </el-row>
-                <el-row>
-                    <div class="center">
-                        <el-col class="cardbody" :span="4" v-for="album in albums.data" :key="album">
-                            <el-card :body-style="{ padding: '0px' }">
-                            <div class="parent-card">
-                                <img v-img v-bind:src="album.cover_image" v-bind:alt="album.name" class="image-aspect">
-                            </div>
-                            <div style="padding: 14px;">
-                                <span>@{{ trimmedText(album.name, 17) }}</span>
-                                <div class="bottom clearfix">
-                                <time class="time">
-                                    <i class="el-icon-picture"></i>
-                                    <span style="margin-left: 10px">@{{ album.photos.length }} photos in album</span>
-                                </time>
-                                <el-button v-on:click="editAlbum(album)" class="button pull-right" type="danger" icon="el-icon-edit"></el-button>
-                                <el-button v-on:click="showAlbum(album)" class="button" type="primary" icon="el-icon-view"></el-button>
+                <div v-if="this.albums.count > 0" class="box-body">
+                    <el-row>
+                        <div class="block text-center">
+                            <el-pagination
+                            layout="prev, pager, next"
+                            :total="albums.meta.total"
+                            :page-size="albums.meta.per_page"
+                            :current-page.sync="albums.meta.current_page"
+                            @current-change="handleCurrentPageChange">
+                            </el-pagination>
+                        </div>
+                    </el-row>
+                    <el-row>
+                        <div class="center">
+                            <el-col class="cardbody" :span="4" v-for="album in albums.data" :key="album">
+                                <el-card :body-style="{ padding: '0px' }">
+                                <div class="parent-card">
+                                    <img v-img v-bind:src="album.cover_image" v-bind:alt="album.name" class="image-aspect">
                                 </div>
-                            </div>
-                            </el-card>
-                        </el-col>
-                    </div>
-                </el-row>
-                <el-row class="box">
-                    <div class="block text-center">
-                        <el-pagination
-                        layout="prev, pager, next"
-                        :total="albums.meta.total"
-                        :page-size="albums.meta.per_page"
-                        :current-page="albums.meta.current_page"
-                        @current-change="handleCurrentPageChange">
-                        </el-pagination>
-                    </div>
-                </el-row>
+                                <div style="padding: 14px;">
+                                    <span>@{{ trimmedText(album.name, 17) }}</span>
+                                    <div class="bottom clearfix">
+                                    <time class="time">
+                                        <i class="el-icon-picture"></i>
+                                        <span style="margin-left: 10px">@{{ album.photos.length }} photos in album</span>
+                                    </time>
+                                    <el-button v-on:click="editAlbum(album)" class="button pull-right" type="danger" icon="el-icon-edit"></el-button>
+                                    <el-button v-on:click="showAlbum(album)" class="button" type="primary" icon="el-icon-view"></el-button>
+                                    </div>
+                                </div>
+                                </el-card>
+                            </el-col>
+                        </div>
+                    </el-row>
+                    <el-row class="box">
+                        <div class="block text-center">
+                            <el-pagination
+                            layout="prev, pager, next"
+                            :total="albums.meta.total"
+                            :page-size="albums.meta.per_page"
+                            :current-page="albums.meta.current_page"
+                            @current-change="handleCurrentPageChange">
+                            </el-pagination>
+                        </div>
+                    </el-row>
+                </div>
+                <div v-else class="text-center box-body">
+                    <span class="description"> No Albums Yet. <a href="{{ route('album.create') }}">Create</a> one!</span>
+                </div>
                 <!-- /.box-body -->
             </div>
         <!-- /.box -->

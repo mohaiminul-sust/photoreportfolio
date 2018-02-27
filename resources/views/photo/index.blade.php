@@ -33,55 +33,60 @@
                 </el-header>
                 </div>
                 <!-- /.box-header -->
-                <el-row>
-                    <div class="block text-center">
-                        <el-pagination
-                        layout="prev, pager, next"
-                        :total="photos.meta.total"
-                        :page-size="photos.meta.per_page"
-                        :current-page.sync="photos.meta.current_page"
-                        @current-change="handleCurrentPageChange">
-                        </el-pagination>
-                    </div>
-                </el-row>
-                <el-row>
-                    <div class="center">
-                        <el-col class="cardbody" :span="4" v-for="photo in photos.data" :key="photo">
-                            <el-card :body-style="{ padding: '0px' }">
-                            <div class="parent-card">
-                                <img v-img:group v-bind:src="photo.image" v-bind:alt="photo.caption" class="image-aspect">
-                            </div>
-                            <div style="padding: 14px;">
-                                <span>@{{ trimmedText(photo.caption, 17) }}</span>
-                                <div class="bottom clearfix">
-                                <time class="time">
-                                    <i class="el-icon-time"></i>
-                                    <span style="margin-left: 10px">@{{ photo.created_date }}</span>
-                                </time>
-                                <time class="time">
-                                    <i class="el-icon-menu"></i>
-                                    <span style="margin-left: 10px">@{{ trimmedText(photo.album.name, 13) }}</span>
-                                </time>
-                                <hr>
-                                <el-button v-on:click="editPhoto(photo)" class="button pull-right" type="danger" icon="el-icon-edit"></el-button>
-                                <el-button v-on:click="showPhoto(photo)" class="button" type="primary" icon="el-icon-view"></el-button>
+                <div v-if="this.photos.count > 0" class="box-body">
+                    <el-row>
+                        <div class="block text-center">
+                            <el-pagination
+                            layout="prev, pager, next"
+                            :total="photos.meta.total"
+                            :page-size="photos.meta.per_page"
+                            :current-page.sync="photos.meta.current_page"
+                            @current-change="handleCurrentPageChange">
+                            </el-pagination>
+                        </div>
+                    </el-row>
+                    <el-row>
+                        <div class="center">
+                            <el-col class="cardbody" :span="4" v-for="photo in photos.data" :key="photo">
+                                <el-card :body-style="{ padding: '0px' }">
+                                <div class="parent-card">
+                                    <img v-img:group v-bind:src="photo.image" v-bind:alt="photo.caption" class="image-aspect">
                                 </div>
-                            </div>
-                            </el-card>
-                        </el-col>
-                    </div>
-                </el-row>
-                <el-row class="box">
-                    <div class="block text-center">
-                        <el-pagination
-                        layout="prev, pager, next"
-                        :total="photos.meta.total"
-                        :page-size="photos.meta.per_page"
-                        :current-page="photos.meta.current_page"
-                        @current-change="handleCurrentPageChange">
-                        </el-pagination>
-                    </div>
-                </el-row>
+                                <div style="padding: 14px;">
+                                    <span>@{{ trimmedText(photo.caption, 17) }}</span>
+                                    <div class="bottom clearfix">
+                                    <time class="time">
+                                        <i class="el-icon-time"></i>
+                                        <span style="margin-left: 10px">@{{ photo.created_date }}</span>
+                                    </time>
+                                    <time class="time">
+                                        <i class="el-icon-menu"></i>
+                                        <span style="margin-left: 10px">@{{ trimmedText(photo.album.name, 13) }}</span>
+                                    </time>
+                                    <hr>
+                                    <el-button v-on:click="editPhoto(photo)" class="button pull-right" type="danger" icon="el-icon-edit"></el-button>
+                                    <el-button v-on:click="showPhoto(photo)" class="button" type="primary" icon="el-icon-view"></el-button>
+                                    </div>
+                                </div>
+                                </el-card>
+                            </el-col>
+                        </div>
+                    </el-row>
+                    <el-row class="box">
+                        <div class="block text-center">
+                            <el-pagination
+                            layout="prev, pager, next"
+                            :total="photos.meta.total"
+                            :page-size="photos.meta.per_page"
+                            :current-page="photos.meta.current_page"
+                            @current-change="handleCurrentPageChange">
+                            </el-pagination>
+                        </div>
+                    </el-row>
+                </div>
+                <div v-else class="text-center box-body">
+                    <span class="description"> No Photos Yet. <a href="{{ route('photo.uploadimage') }}">Upload</a> one!</span>
+                </div>
                 <!-- /.box-body -->
             </div>
         <!-- /.box -->

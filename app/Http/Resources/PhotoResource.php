@@ -17,7 +17,7 @@ class PhotoResource extends Resource
     {
         return [
             'id' => $this->id,
-            'image' => $this->image,
+            'image' => url('/').$this->image,
             'caption' => $this->caption,
             'notes' => $this->notes,
             'album' => $this->album,

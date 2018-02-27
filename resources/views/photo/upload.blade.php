@@ -14,7 +14,7 @@
             <!-- /.box-header -->
             <!-- form start -->
             <div class="box-body">
-                <div class="box">
+                <div v-if="albumlist.count > 0" class="box">
                     <div class="box-header">
                         <h3 class="box-title center">Choose Album</h3>
                     </div>
@@ -29,7 +29,7 @@
                         </el-select>
                     </div>
                 </div>
-                <div class="box">
+                <div v-if="albumlist.count > 0" class="box">
                     <div class="box-header">
                         <h3 class="box-title center">Upload Image</h3>
                     </div>
@@ -47,6 +47,9 @@
                             </el-upload>
                         </div>
                     </div>
+                </div>
+                <div v-else class="text-center box-body">
+                    <span class="description"><a href="{{ route('album.create') }}">Create an album</a>  first to upload photos!</span>
                 </div>
             </div>
         </div>
@@ -75,10 +78,10 @@
             } 
         },
         created() {
-            this.fetchAlbums();
+            this.fetchAlbumsList();
         },
         methods: {
-            fetchAlbums: function() {
+            fetchAlbumsList: function() {
                 var link = "{!! url('albums/list') !!}";
                 this.loading = true;
                 axios.get(link)

@@ -133,7 +133,7 @@ class PhotoController extends Controller
                 $filename = $file->getClientOriginalName();
                 $file->move($destinationPath, $filename);
 
-                $photo->image = url('/').'/uploads/albums/'.$id.'/photos/'.$filename;
+                $photo->image = '/uploads/albums/'.$id.'/photos/'.$filename;
                 $photo->save();
             }
         }
