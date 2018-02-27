@@ -31,7 +31,7 @@ Route::group(['prefix' => 'albums'], function() {
     Route::get('/', 'AlbumController@index')->name('album.index');
     Route::get('/all', 'AlbumController@getAlbums')->name('album.all');
     Route::get('/list', 'AlbumController@listAlbums')->name('album.list');
-    Route::get('/search', 'AlbumController@search')->name('album.search');
+    Route::get('/search', 'AlbumController@searchAlbums')->name('album.search');
     Route::get('/create', 'AlbumController@create')->name('album.create');
     Route::post('/create', 'AlbumController@store')->name('album.store');
     Route::get('/{id}', 'AlbumController@show')->name('album.show');
@@ -45,7 +45,7 @@ Route::group(['prefix' => 'albums'], function() {
 Route::group(['prefix' => 'photos'], function() {
     Route::get('/', 'PhotoController@index')->name('photo.index');
     Route::get('/all', 'PhotoController@getPhotos')->name('photo.all');
-    Route::get('/search', 'PhotoController@search')->name('photo.search');
+    Route::get('/search', 'PhotoController@searchPhotos')->name('photo.search');
     Route::get('/{id}', 'PhotoController@show')->name('photo.show');
     Route::get('/upload/image/new', 'PhotoController@uploadImage')->name('photo.uploadimage');
     Route::get('/upload/image/album/{id}', 'PhotoController@uploadImageByAlbum')->name('photo.uploadimagebyalbum');

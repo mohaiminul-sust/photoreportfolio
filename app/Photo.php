@@ -2,16 +2,13 @@
 
 namespace App;
 
-use Sofa\Eloquence\Eloquence;
 use Illuminate\Database\Eloquent\Model;
 
 class Photo extends Model
 {
-    use Eloquence;
     protected $table = 'photos';
   
     protected $guarded = [];
-    protected $searchableColumns = ['caption', 'notes', 'album.name', 'tags.tag'];
 
     public function album()
     {
@@ -20,5 +17,15 @@ class Photo extends Model
 
     public function tags(){
         return $this->hasMany('App\Tag');
+    }
+
+    public function scopeSearchByKeyword($query, $keyword)
+    {
+        if ($keyword != '') {
+            $query->where(function ($query) use ($keyword) {
+                $query->where("caption", "LIKE","%$keyword%");
+            });
+        }
+        return $query;
     }
 }
