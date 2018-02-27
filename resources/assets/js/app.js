@@ -8,6 +8,7 @@
 require('./bootstrap');
 import ElementUI from 'element-ui';
 import VueImg from 'v-img';
+import SweetModal from 'sweet-modal-vue/src/plugin.js';
 
 window.Vue = require('vue');
 
@@ -20,3 +21,4 @@ const vueImgConfig = {
     thumbnails: true,
   }
 Vue.use(VueImg, vueImgConfig);
+Vue.use(SweetModal);

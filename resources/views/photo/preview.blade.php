@@ -6,6 +6,12 @@
 
 @section('content')
     <div id="preview-photo" class="container" v-cloak>
+        <sweet-modal ref="imageinfo" title="Image Info">
+            <sweet-modal-tab title="Tab 1" id="tab1">Contents of Tab 1</sweet-modal-tab>
+            <sweet-modal-tab title="Tab 2" id="tab2">Contents of Tab 2</sweet-modal-tab>
+            <sweet-modal-tab title="Tab 3" id="tab3" disabled>Tab 3 is disabled</sweet-modal-tab>
+        </sweet-modal>
+                
         <div class="box box-primary">
             <div class="box-header with-border user-block">
                 <img v-img class="img-circle img-bordered-sm" :src="photo.album.cover_image" :alt="photo.album.name">
@@ -61,9 +67,37 @@
     var previewphoto = new Vue({
         el: '#preview-photo',
         data: {
-            photo: {},
-            exif: {}
-        }, 
+            photo: {}
+        },
+        computed: {
+            cameraData : function() {
+                let exif = this.photo.exif;
+                return {
+                    brand: exif.Make,
+                    model: exif.Model,
+                    meteringMode: exif.MeteringMode,
+                    aperture: exif.COMPUTED.ApertureFNumber,
+                    exposureProgram: exif.ExposureProgram,
+                    exposureTime: exif.ExposureTime,
+                    exposureBiasValue: exif.ExposureBiasValue,
+                    focalLength: exif.FocalLength,
+                    iso: exif.ISOSpeedRatings,
+                    flash: exif.Flash,
+                    orientation: exif.Orientation
+                };
+            },
+            imageData : function() {
+                let exif = this.photo.exif;
+                return {
+                    fileName: exif.FileName,
+                    editedBy: exif.Software,
+                    height: exif.COMPUTED.Height,
+                    width: exif.COMPUTED.Width,
+                    color: exif.COMPUTED.IsColor,
+                    originalDate: exif.DateTimeOriginal
+                };
+            }
+        },
         created() {
             this.fetchPhoto({!! $id !!});
         },
@@ -98,6 +132,9 @@
             showAlbum: function() {
                 var link = "{!! url('albums/preview') !!}/" + this.photo.album.id;
                 document.location.href = link;
+            },
+            openImageInfo: function() {
+                this.$refs.imageinfo.open();
             }
         }
     })

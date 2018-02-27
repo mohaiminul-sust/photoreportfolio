@@ -23,6 +23,7 @@
     },
     "dependencies": {
         "element-ui": "^2.2.0",
+        "sweet-modal-vue": "^2.0.0",
         "v-img": "^0.2.0"
     }
 }
